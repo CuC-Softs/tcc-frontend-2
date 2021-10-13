@@ -21,6 +21,6 @@ export default createGlobalStyle`
   }
 
   body, input, button, p {
-    font: 1.6rem 'Varela Round', sans-serif;
+    font: 1.6rem 'Roboto', sans-serif;
   }
 `
