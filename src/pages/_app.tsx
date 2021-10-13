@@ -1,15 +1,39 @@
-import { AppProps } from 'next/app'
-import { ThemeProvider } from 'styled-components'
-import GlobalStyle from '../styles/global'
+import Head from 'next/head'
+import { ThemeProvider } from '@material-ui/core/styles'
+import { ThemeProvider as StyledComponentThemeProvider } from 'styled-components'
+import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../styles/theme'
+import GlobalStyle from '../styles/global'
+import { useEffect } from 'react'
 
-const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
+const IFConnect = (props) => {
+  const { Component, pageProps } = props
+
+  useEffect(() => {
+    const jssStyles = document.querySelector('#jss-server-side')
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles)
+    }
+  }, [])
+
   return (
-    <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
-      <GlobalStyle />
-    </ThemeProvider>
+    <>
+      <Head>
+        <title>IFConnect</title>
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width"
+        />
+      </Head>
+      <ThemeProvider theme={theme}>
+        <StyledComponentThemeProvider theme={theme}>
+          <CssBaseline />
+          <Component {...pageProps} />
+          <GlobalStyle />
+        </StyledComponentThemeProvider>
+      </ThemeProvider>
+    </>
   )
 }
 
-export default MyApp
+export default IFConnect

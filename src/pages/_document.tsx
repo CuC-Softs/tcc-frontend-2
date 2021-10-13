@@ -1,11 +1,15 @@
 import Document, {
-  DocumentInitialProps,
-  DocumentContext,
   Html,
   Head,
   Main,
-  NextScript
+  NextScript,
+  DocumentContext,
+  DocumentInitialProps
 } from 'next/document'
+import { ServerStyleSheets } from '@material-ui/core/styles'
+import theme from '../styles/theme'
+// eslint-disable-next-line no-use-before-define
+import React from 'react'
 import { ServerStyleSheet } from 'styled-components'
 
 export default class MyDocument extends Document {
@@ -13,13 +17,14 @@ export default class MyDocument extends Document {
     ctx: DocumentContext
   ): Promise<DocumentInitialProps> {
     const sheet = new ServerStyleSheet()
+    const materialStylesheet = new ServerStyleSheets()
     const originalRenderPage = ctx.renderPage
 
     try {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props) =>
-            sheet.collectStyles(<App {...props} />)
+            materialStylesheet.collect(sheet.collectStyles(<App {...props} />))
         })
 
       const initialProps = await Document.getInitialProps(ctx)
@@ -29,6 +34,7 @@ export default class MyDocument extends Document {
           <>
             {initialProps.styles}
             {sheet.getStyleElement()}
+            {materialStylesheet.getStyleElement()}
           </>
         )
       }
@@ -41,11 +47,11 @@ export default class MyDocument extends Document {
     return (
       <Html lang="pt">
         <Head>
-          <meta charSet="utf-8" />
-
+          {/* PWA primary color */}
+          <meta name="theme-color" content={theme.palette.primary.main} />
           <link
-            href="https://fonts.googleapis.com/css?family=Roboto:400,500,700"
             rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
         </Head>
         <body>
