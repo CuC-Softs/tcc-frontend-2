@@ -12,6 +12,15 @@ export default createGlobalStyle`
     display: flex;
     min-height: -webkit-fill-available;
     min-width: -webkit-fill-available;
+    position: fixed;
+    overflow-y: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    min-height: fit-content;
   }
   body {
     display: flex;
@@ -36,6 +45,14 @@ export default createGlobalStyle`
     }
   }
   #__next {
+    position: fixed;
+    overflow-y: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     width: 100%;
+    height: 100%;
+    min-height: fit-content;
   }
 `
