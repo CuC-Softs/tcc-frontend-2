@@ -39,6 +39,8 @@ const Container = styled.div`
     rgba(102, 187, 106, 1) 50%
   );
 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
   img {
     background-color: #c4c4c4;
     width: 5rem;
