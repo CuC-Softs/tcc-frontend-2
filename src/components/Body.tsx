@@ -14,5 +14,5 @@ const Container = styled.div`
   display: flex;
   position: absolute;
   top: 7rem;
-  bottom: 0;
+  bottom: 5.7rem;
 `

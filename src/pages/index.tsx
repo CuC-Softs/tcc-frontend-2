@@ -1,10 +1,6 @@
-import {
-  Box,
-  BottomNavigation,
-  BottomNavigationAction
-} from '@material-ui/core'
+import { BottomNavigation, BottomNavigationAction } from '@material-ui/core'
 
-import { AcUnit, AcUnitOutlined, AcUnitRounded } from '@material-ui/icons'
+import { Add, Chat, HomeOutlined, Notifications } from '@material-ui/icons'
 
 // eslint-disable-next-line no-use-before-define
 import React from 'react'
@@ -13,29 +9,31 @@ import Body from '../components/Body'
 import Header from '../components/Header'
 
 const Home: React.FC = () => {
-  const [value, setValue] = React.useState(0)
+  const [tab, setTab] = React.useState(0)
 
   return (
     <Container>
       <Header pageName="Dashboard" />
       <Body>
-        <div className="nav">
-          <BottomNavigation
-            showLabels
-            value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue)
-            }}
-          >
-            <BottomNavigationAction label="Recents" icon={<AcUnit />} />
-            <BottomNavigationAction
-              label="Favorites"
-              icon={<AcUnitOutlined />}
-            />
-            <BottomNavigationAction label="Nearby" icon={<AcUnitRounded />} />
-          </BottomNavigation>
-        </div>
+        <h1 style={{ fontSize: '5rem' }}>Oi</h1>
       </Body>
+      <div className="nav">
+        <BottomNavigation
+          showLabels
+          value={tab}
+          onChange={(event, newValue) => {
+            setTab(newValue)
+          }}
+        >
+          <BottomNavigationAction label="Home" icon={<HomeOutlined />} />
+          <BottomNavigationAction label="Post" icon={<Add />} />
+          <BottomNavigationAction label="Chat" icon={<Chat />} />
+          <BottomNavigationAction
+            label="Notification"
+            icon={<Notifications />}
+          />
+        </BottomNavigation>
+      </div>
     </Container>
   )
 }
