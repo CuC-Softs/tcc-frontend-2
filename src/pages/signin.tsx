@@ -7,7 +7,6 @@ import {
   TextField,
   Button,
   Typography,
-  Link,
   makeStyles
 } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
@@ -17,6 +16,7 @@ import styled from 'styled-components'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import theme from '../styles/theme'
+import Link from 'next/link'
 
 const useStyles = makeStyles((theme) => ({
   paperStyle: {
@@ -165,6 +165,7 @@ const SignIn: React.FC = () => {
               variant="contained"
               className={classes.button}
               fullWidth
+              disabled={formHaveError}
             >
               Sign in
             </Button>
@@ -173,11 +174,7 @@ const SignIn: React.FC = () => {
             <Link href="#">Forgot password ?</Link>
           </Typography>
           <Typography style={{ margin: 0, marginTop: 'auto' }}>
-            {' '}
-            Do you have an account ?
-            <Link style={{ marginLeft: 5 }} href="/signup">
-              Sign Up
-            </Link>
+            Do you have an account ?<Link href="/signup">Sign Up</Link>
           </Typography>
         </Paper>
       </Grid>
@@ -204,5 +201,6 @@ const Container = styled.div`
 
   a {
     font-size: 100%;
+    color: ${(p) => p.theme.palette.primary.dark};
   }
 `

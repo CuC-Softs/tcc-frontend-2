@@ -9,8 +9,7 @@ import {
   TextField,
   Button,
   makeStyles,
-  FormHelperText,
-  Link
+  FormHelperText
 } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined'
 import Radio from '@material-ui/core/Radio'
@@ -23,6 +22,7 @@ import styled from 'styled-components'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import theme from '../styles/theme'
+import Link from 'next/link'
 
 const useStyles = makeStyles((theme) => ({
   paperStyle: {
@@ -279,16 +279,13 @@ const SignUp: React.FC = () => {
               color="primary"
               className={classes.button}
               disabled={formHaveError}
+              fullWidth
             >
               Sign up
             </Button>
           </form>
           <Typography style={{ margin: 0, marginTop: 'auto' }}>
-            {' '}
-            Do you already have an account ?
-            <Link style={{ marginLeft: 5 }} href="/signin">
-              Sign In
-            </Link>
+            Do you already have an account ?<Link href="/signin">Sign In</Link>
           </Typography>
         </Paper>
       </Grid>
@@ -315,5 +312,6 @@ const Container = styled.div`
 
   a {
     font-size: 100%;
+    color: ${(p) => p.theme.palette.primary.dark};
   }
 `
