@@ -9,7 +9,8 @@ import {
   TextField,
   Button,
   makeStyles,
-  FormHelperText
+  FormHelperText,
+  Link
 } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined'
 import Radio from '@material-ui/core/Radio'
@@ -282,6 +283,13 @@ const SignUp: React.FC = () => {
               Sign up
             </Button>
           </form>
+          <Typography style={{ margin: 0, marginTop: 'auto' }}>
+            {' '}
+            Do you already have an account ?
+            <Link style={{ marginLeft: 5 }} href="/signin">
+              Sign In
+            </Link>
+          </Typography>
         </Paper>
       </Grid>
     </Container>

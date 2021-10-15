@@ -175,7 +175,7 @@ const SignIn: React.FC = () => {
           <Typography style={{ margin: 0, marginTop: 'auto' }}>
             {' '}
             Do you have an account ?
-            <Link style={{ marginLeft: 5 }} href="#">
+            <Link style={{ marginLeft: 5 }} href="/signup">
               Sign Up
             </Link>
           </Typography>
