@@ -6,7 +6,6 @@ export default createGlobalStyle`
     padding: 0;
     outline: 0;
     box-sizing: border-box;
-    font-size: 62.5%;
   }
   html {
     display: flex;
@@ -37,7 +36,7 @@ export default createGlobalStyle`
     -webkit-font-smoothing: antialiased;
   }
   body, input, button, p {
-    font: 1.6rem 'Varela Round', sans-serif;
+    font: 16px 'Varela Round', sans-serif;
   }
   button {
     &:hover {
