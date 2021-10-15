@@ -3,7 +3,6 @@ import { lightBlue, red } from '@material-ui/core/colors'
 
 // Create a theme instance.
 const theme = createTheme({
-  typography: { fontSize: 25 },
   palette: {
     primary: {
       main: '#66BB6A',
@@ -17,13 +16,6 @@ const theme = createTheme({
     },
     error: {
       main: red.A400
-    },
-    background: {
-      default: '#FFF'
-    },
-    text: {
-      primary: '#fff',
-      secondary: 'rgba(0, 0, 0, 0.54)'
     }
   }
 })
