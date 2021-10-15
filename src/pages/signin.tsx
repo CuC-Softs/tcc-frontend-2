@@ -32,8 +32,16 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column'
   },
   avatarStyle: { backgroundColor: theme.palette.primary.main, marginBottom: 8 },
-  button: { margin: '8px 0', color: theme.palette.background.default },
-  textField: { padding: '0 10px' },
+  button: {
+    margin: '8px 0',
+    color: theme.palette.background.default,
+    fontSize: '1.5rem'
+  },
+  textField: {
+    height: '2.5rem',
+    paddingLeft: 10,
+    fontSize: '1.2rem'
+  },
   radio: { lineHeight: 'normal' }
 }))
 
@@ -81,7 +89,7 @@ const SignIn: React.FC = () => {
   }, [formik.errors, formik.touched])
 
   return (
-    <Container>
+    <Container style={{ background: 'url(/background.svg)' }}>
       <Grid>
         <Paper elevation={5} className={classes.paperStyle}>
           <Grid>
@@ -95,7 +103,7 @@ const SignIn: React.FC = () => {
             >
               <LockOutlinedIcon />
             </Avatar>
-            <h2>Sign In</h2>
+            <Typography variant="h2">Sign In</Typography>
           </Grid>
           <TextField
             id="username"
@@ -110,7 +118,11 @@ const SignIn: React.FC = () => {
             placeholder="Enter username"
             fullWidth
             required
-            InputProps={{ inputProps: { style: { paddingLeft: 10 } } }}
+            InputProps={{
+              inputProps: {
+                className: classes.textField
+              }
+            }}
           />
           <TextField
             id="password"
@@ -126,7 +138,11 @@ const SignIn: React.FC = () => {
             type="password"
             fullWidth
             required
-            InputProps={{ inputProps: { style: { paddingLeft: 10 } } }}
+            InputProps={{
+              inputProps: {
+                className: classes.textField
+              }
+            }}
           />
           <FormControlLabel
             control={
@@ -177,6 +193,12 @@ const Container = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
 
   a {
     font-size: 100%;
