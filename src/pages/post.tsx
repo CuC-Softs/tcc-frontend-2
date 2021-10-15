@@ -34,18 +34,30 @@ const pages: React.FC = () => {
             </Body>
           </div>
           <Options>
-            <button className="option">
-              <Home />
-            </button>
-            <button className="option">
-              <Home />
-            </button>
-            <button className="option">
-              <Home />
-            </button>
-            <button className="option">
-              <Home />
-            </button>
+            <div className="option">
+              <button>
+                <Home />
+                <span>19</span>
+              </button>
+            </div>
+            <div className="option">
+              <button>
+                <Home />
+                <span>19</span>
+              </button>
+            </div>
+            <div className="option">
+              <button>
+                <Home />
+                <span>19</span>
+              </button>
+            </div>
+            <div className="option">
+              <button>
+                <Home />
+                <span>19</span>
+              </button>
+            </div>
           </Options>
         </Paper>
       </Grid>
@@ -117,21 +129,44 @@ const Options = styled.div`
     background: none;
     border: none;
     text-decoration: none;
-    color: ${(p) => p.theme.palette.secondary.main};
     padding: 0.5rem;
 
-    :hover {
-      background-color: ${(p) =>
-        darken(p.theme.palette.background.default, 0.03)};
-      transition: background-color 300ms ease;
-    }
-  }
+    button {
+      background: none;
+      border: none;
+      border-radius: 50%;
+      color: ${(p) => p.theme.palette.text.secondary};
+      transition: 300ms ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 200ms ease;
 
-  svg {
-    width: 2.4rem;
-    height: 2.4rem;
-    padding: 0 !important;
-    color: ${(p) => p.theme.palette.secondary.main};
+      :hover {
+        color: ${(p) => p.theme.palette.secondary.main};
+
+        svg {
+          background-color: rgba(0, 0, 0, 0.2);
+        }
+      }
+
+      svg {
+        width: 3.3rem;
+        height: 3.3rem;
+        margin: 0 !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: background-color 300ms ease;
+      }
+
+      span {
+        font-size: 1.5rem;
+        margin-left: 0.5rem;
+      }
+    }
   }
 `
 
