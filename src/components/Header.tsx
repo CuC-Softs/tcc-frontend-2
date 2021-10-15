@@ -4,13 +4,19 @@ import styled from 'styled-components'
 
 interface HeaderProps extends HTMLProps<HTMLDivElement> {
   pageName: string
+  image?: string
 }
 
-const Header: React.FC<HeaderProps> = ({ pageName, children }) => {
+const Header: React.FC<HeaderProps> = ({
+  image,
+  pageName,
+  children,
+  ...rest
+}) => {
   return (
     <Container>
-      <div className="content">
-        <img src="" alt="profile image" />
+      <div className="content" {...rest}>
+        <img src={image} alt="profile image" />
         {children}
         <Typography variant="h6" style={{ textTransform: 'capitalize' }}>
           {pageName}
@@ -25,10 +31,10 @@ export default Header
 const Container = styled.div`
   display: flex;
   width: 100%;
-  position: absolute;
+  position: relative;
   height: fit-content;
   justify-content: center;
-  min-height: 5.5rem;
+  min-height: 55px;
   left: 0;
   right: 0;
   color: ${(p) => p.theme.palette.text.primary};
@@ -40,17 +46,19 @@ const Container = styled.div`
   );
 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 
   img {
     background-color: #c4c4c4;
-    width: 5rem;
-    height: 5rem;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
+    font-size: 0px;
   }
 
   .content {
     display: flex;
-    padding: 1rem;
+    padding: 10px;
     justify-content: space-between;
     align-items: center;
     width: 100%;
