@@ -106,8 +106,5 @@ const Container = styled.div`
     background: ${(p) => p.theme.palette.primary.light};
     width: 50%;
     border-radius: 0.3rem;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
   }
 `
