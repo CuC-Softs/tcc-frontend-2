@@ -1,10 +1,10 @@
 // eslint-disable-next-line no-use-before-define
 import React from 'react'
-import { darken, Grid, makeStyles, Paper } from '@material-ui/core'
+import { Grid, makeStyles, Paper } from '@material-ui/core'
 import styled from 'styled-components'
 import { Home } from '@material-ui/icons'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: { width: '100%', height: '100%' },
   paper: {
     width: '100%',
@@ -27,10 +27,10 @@ const pages: React.FC = () => {
               <img src="" alt="" />
             </Side>
             <Body>
-              <Height>
+              <Header>
                 <h6>Placeholder</h6>
                 <span>@Placeholder - 36 min</span>
-              </Height>
+              </Header>
             </Body>
           </div>
           <Options>
@@ -170,7 +170,7 @@ const Options = styled.div`
   }
 `
 
-const Height = styled.div`
+const Header = styled.div`
   width: 100%;
   color: ${(p) => p.theme.palette.text.secondary};
   display: flex;
