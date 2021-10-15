@@ -1,6 +1,7 @@
 import {
   BottomNavigation,
   BottomNavigationAction,
+  TextField,
   Typography
 } from '@material-ui/core'
 
@@ -17,7 +18,26 @@ const Home: React.FC = () => {
 
   return (
     <Container>
-      <Header pageName="Dashboard" />
+      <Header pageName="Dashboard">
+        <div className="search-bar-container">
+          <TextField
+            id="password"
+            name="password"
+            autoComplete="disabled"
+            autoFocus
+            // onChange={formik.handleChange}
+            // value={formik.values.password}            label="Password"
+            placeholder="Search..."
+            type="text"
+            fullWidth
+            InputProps={{
+              inputProps: {
+                style: { height: '2.5rem', paddingLeft: 10, fontSize: '1.2rem' }
+              }
+            }}
+          />
+        </div>
+      </Header>
       <Body>
         {(() => {
           switch (tab) {
@@ -80,5 +100,14 @@ const Container = styled.div`
     position: absolute;
     bottom: 0;
     justify-content: center;
+  }
+
+  .search-bar-container {
+    background: ${(p) => p.theme.palette.primary.light};
+    width: 50%;
+    border-radius: 0.3rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 `

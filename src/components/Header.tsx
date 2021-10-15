@@ -76,5 +76,6 @@ const Container = styled.div`
     height: 100%;
     min-height: fit-content;
     max-width: 117rem;
+    position: relative;
   }
 `
