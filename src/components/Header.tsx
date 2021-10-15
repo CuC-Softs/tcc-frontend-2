@@ -34,7 +34,7 @@ const Container = styled.div`
   position: relative;
   height: fit-content;
   justify-content: center;
-  min-height: 55px;
+  min-height: 5.5rem;
   left: 0;
   right: 0;
   color: ${(p) => p.theme.palette.text.primary};
@@ -45,25 +45,25 @@ const Container = styled.div`
     rgba(102, 187, 106, 1) 50%
   );
 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.2);
   z-index: 1;
 
   img {
     background-color: #c4c4c4;
-    width: 50px;
-    height: 50px;
+    width: 5rem;
+    height: 5rem;
     border-radius: 50%;
-    font-size: 0px;
+    font-size: 0rem;
   }
 
   .content {
     display: flex;
-    padding: 10px;
+    padding: 1rem;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     height: 100%;
     min-height: fit-content;
-    max-width: 1170px;
+    max-width: 117rem;
   }
 `

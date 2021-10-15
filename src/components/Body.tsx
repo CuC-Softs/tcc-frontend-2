@@ -13,6 +13,6 @@ const Container = styled.div`
   background-color: #ebebeb;
   display: flex;
   position: absolute;
-  top: 77px;
+  top: 7rem;
   bottom: 0;
 `
