@@ -9,9 +9,12 @@ const useStyles = makeStyles(() => ({
   paper: {
     width: '100%',
     height: '100%',
+    minWidth: 'fit-content',
+    minHeight: 'fit-content',
     display: 'flex',
     flexDirection: 'column',
-    paddingTop: 12
+    paddingTop: 12,
+    position: 'relative'
   }
 }))
 
@@ -24,13 +27,16 @@ const pages: React.FC = () => {
         <Paper elevation={2} className={classes.paper}>
           <div className="main-content">
             <Side>
-              <img src="" alt="" />
+              <img src="" alt="profile image" />
             </Side>
             <Body>
               <Header>
                 <h6>Placeholder</h6>
                 <span>@Placeholder - 36 min</span>
               </Header>
+              <div className="post-data">
+                <img src="/background.svg" alt="post image" />
+              </div>
             </Body>
           </div>
           <Options>
@@ -68,12 +74,7 @@ const pages: React.FC = () => {
 export default pages
 
 const Container = styled.div`
-  width: 60%;
-  height: 60%;
-  display: flex;
-  font-size: 4rem;
-  align-items: center;
-  flex-direction: column;
+  padding: 0.5rem;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -81,7 +82,7 @@ const Container = styled.div`
 
   .main-content {
     display: flex;
-    height: 100%;
+    height: 90%;
     width: 100%;
   }
 `
@@ -101,6 +102,7 @@ const Side = styled.div`
     background-repeat: no-repeat;
     background-color: #c3c3c3;
     border: none;
+    font-size: 0;
   }
 `
 
@@ -109,10 +111,30 @@ const Body = styled.div`
   width: 100%;
   height: 100%;
   margin-right: 16px;
+  flex-direction: column;
+
+  .post-data {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 50rem;
+      height: 28rem;
+      background-size: cover;
+      background-position: center;
+      border-radius: 3rem;
+      object-fit: cover;
+    }
+  }
 `
 
 const Options = styled.div`
   width: 100%;
+  height: 10%;
   padding-top: 0.5rem;
   min-height: fit-content;
   display: flex;
