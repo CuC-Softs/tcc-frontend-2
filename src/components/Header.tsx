@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core'
+import { createStyles, makeStyles, Typography } from '@material-ui/core'
 import { HTMLProps } from 'react'
 import styled from 'styled-components'
 
@@ -7,18 +7,29 @@ interface HeaderProps extends HTMLProps<HTMLDivElement> {
   image?: string
 }
 
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    title: {
+      textTransform: 'capitalize',
+      color: theme.palette.background.default
+    }
+  })
+)
+
 const Header: React.FC<HeaderProps> = ({
   image,
   pageName,
   children,
   ...rest
 }) => {
+  const classes = useStyles()
+
   return (
     <Container>
       <div className="content" {...rest}>
         <img src={image} alt="profile image" />
         {children}
-        <Typography variant="h6" style={{ textTransform: 'capitalize' }}>
+        <Typography variant="h4" className={classes.title}>
           {pageName}
         </Typography>
       </div>
