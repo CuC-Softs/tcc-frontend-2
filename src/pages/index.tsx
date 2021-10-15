@@ -1,4 +1,8 @@
-import { BottomNavigation, BottomNavigationAction } from '@material-ui/core'
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Typography
+} from '@material-ui/core'
 
 import { Add, Chat, HomeOutlined, Notifications } from '@material-ui/icons'
 
@@ -15,7 +19,26 @@ const Home: React.FC = () => {
     <Container>
       <Header pageName="Dashboard" />
       <Body>
-        <h1 style={{ fontSize: '5rem' }}>Oi</h1>
+        {(() => {
+          switch (tab) {
+            case 0:
+              return <Typography variant="h2">Tab 0</Typography>
+              break
+            case 1:
+              return <Typography variant="h2">Tab 1</Typography>
+              break
+            case 2:
+              return <Typography variant="h2">Tab 2</Typography>
+              break
+            case 3:
+              return <Typography variant="h2">Tab 3</Typography>
+              break
+
+            default:
+              return <Typography variant="h2">No tab body</Typography>
+              break
+          }
+        })()}
       </Body>
       <div className="nav">
         <BottomNavigation
