@@ -89,7 +89,7 @@ const SignIn: React.FC = () => {
   }, [formik.errors, formik.touched])
 
   return (
-    <Container style={{ background: 'url(/background.svg)' }}>
+    <Container>
       <Grid>
         <Paper elevation={5} className={classes.paperStyle}>
           <Grid>
@@ -199,6 +199,8 @@ const Container = styled.div`
   left: 0;
   right: 0;
   overflow-y: auto;
+  background: url('/background.svg');
+  background-size: cover;
 
   a {
     font-size: 100%;
