@@ -1,8 +1,9 @@
 // eslint-disable-next-line no-use-before-define
-import React from 'react'
+import React, { useState } from 'react'
 import { Grid, makeStyles, Paper } from '@material-ui/core'
 import styled from 'styled-components'
 import { Home } from '@material-ui/icons'
+import ShowMoreText from 'react-show-more-text'
 
 const useStyles = makeStyles(() => ({
   container: { width: '100%', height: '100%' },
@@ -21,12 +22,14 @@ const useStyles = makeStyles(() => ({
 const pages: React.FC = () => {
   const classes = useStyles()
 
+  const [postDataRef, setPostDataRef] = useState<HTMLDivElement | null>(null)
+
   return (
     <Container>
       <Grid className={classes.container}>
         <Paper elevation={2} className={classes.paper}>
           <div className="main-content">
-            <Side>
+            <Side type="button">
               <img src="" alt="profile image" />
             </Side>
             <Body>
@@ -34,14 +37,29 @@ const pages: React.FC = () => {
                 <h6>Placeholder</h6>
                 <span>@Placeholder - 36 min</span>
               </Header>
-              <div className="post-data">
+              <div className="post-data" ref={setPostDataRef}>
+                <ShowMoreText
+                  more="Show More"
+                  less="Show Less"
+                  expanded={false}
+                  width={postDataRef?.offsetWidth - 10}
+                  className="post-text"
+                  truncatedEndingComponent={'... '}
+                >
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Alias repellat quae, quam, fugit placeat sed quos aliquam
+                  doloribus praesentium nisi facilis com
+                </ShowMoreText>
                 <img src="/background.svg" alt="post image" />
               </div>
             </Body>
           </div>
           <Options>
             <div className="option">
-              <button>
+              <button
+                type="button"
+                onClick={() => console.log(postDataRef?.offsetWidth)}
+              >
                 <Home />
                 <span>19</span>
               </button>
@@ -87,12 +105,16 @@ const Container = styled.div`
   }
 `
 
-const Side = styled.div`
+const Side = styled.button`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: fit-content;
   padding-right: 16px;
   padding-left: 16px;
+  background: none;
+  border: none;
+  text-decoration: none;
+  color: unset;
 
   img {
     width: 4.8rem;
@@ -121,13 +143,23 @@ const Body = styled.div`
     justify-content: center;
     align-items: center;
 
+    * {
+      font-size: 100%;
+    }
+
     img {
-      width: 50rem;
-      height: 28rem;
+      width: 100%;
+      height: 100%;
       background-size: cover;
       background-position: center;
       border-radius: 3rem;
       object-fit: cover;
+      font-size: 0px !important;
+    }
+
+    .post-text {
+      font-size: 100%;
+      font-size: 1.4rem;
     }
   }
 `
