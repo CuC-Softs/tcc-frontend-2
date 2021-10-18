@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { Grid, makeStyles, Paper } from '@material-ui/core'
 import styled from 'styled-components'
-import { Home } from '@material-ui/icons'
+import { FavoriteBorder, Home } from '@material-ui/icons'
 import ShowMoreText from 'react-show-more-text'
 
 const useStyles = makeStyles(() => ({
@@ -56,17 +56,8 @@ const pages: React.FC = () => {
           </div>
           <Options>
             <div className="option">
-              <button
-                type="button"
-                onClick={() => console.log(postDataRef?.offsetWidth)}
-              >
-                <Home />
-                <span>19</span>
-              </button>
-            </div>
-            <div className="option">
               <button>
-                <Home />
+                <FavoriteBorder />
                 <span>19</span>
               </button>
             </div>
