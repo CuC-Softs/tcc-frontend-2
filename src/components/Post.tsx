@@ -55,7 +55,7 @@ const Post: React.FC = () => {
 
   const [liked, setLiked] = useState(false)
 
-  const [openComments, setOpenComments] = React.useState(true)
+  const [openComments, setOpenComments] = React.useState(false)
 
   const handleModal = () => setOpenComments(!openComments)
 
@@ -231,10 +231,6 @@ export default Post
 
 const Container = styled.div`
   padding: 0.5rem;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
 
   .main-content {
     display: flex;
