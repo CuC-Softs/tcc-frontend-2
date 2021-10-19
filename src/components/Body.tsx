@@ -15,4 +15,5 @@ const Container = styled.div`
   position: absolute;
   top: 7rem;
   bottom: 5.7rem;
+  overflow-y: auto;
 `
