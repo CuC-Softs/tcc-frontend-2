@@ -12,9 +12,9 @@ import React from 'react'
 import styled from 'styled-components'
 import Body from '../components/Body'
 import Header from '../components/Header'
-import Post from '../components/Post'
+import Home from '../components/IndexTabs/Home'
 
-const Home: React.FC = () => {
+const Dashboard: React.FC = () => {
   const [tab, setTab] = React.useState(0)
 
   return (
@@ -43,12 +43,7 @@ const Home: React.FC = () => {
         {(() => {
           switch (tab) {
             case 0:
-              return (
-                <div style={{ width: '75rem' }}>
-                  <Post />
-                  <Post />
-                </div>
-              )
+              return <Home />
               break
             case 1:
               return <Typography variant="h2">Tab 1</Typography>
@@ -87,7 +82,7 @@ const Home: React.FC = () => {
   )
 }
 
-export default Home
+export default Dashboard
 
 const Container = styled.div`
   width: 100%;

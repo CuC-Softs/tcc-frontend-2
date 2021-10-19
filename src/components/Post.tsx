@@ -77,7 +77,7 @@ const Post: React.FC = () => {
                   more="Show More"
                   less="Show Less"
                   expanded={false}
-                  width={postDataRef?.offsetWidth - 10}
+                  width={(postDataRef?.offsetWidth as number) - 10}
                   className="post-text"
                   truncatedEndingComponent={'... '}
                 >
