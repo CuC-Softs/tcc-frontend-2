@@ -12,6 +12,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Body from '../components/Body'
 import Header from '../components/Header'
+import Post from '../components/Post'
 
 const Home: React.FC = () => {
   const [tab, setTab] = React.useState(0)
@@ -42,7 +43,12 @@ const Home: React.FC = () => {
         {(() => {
           switch (tab) {
             case 0:
-              return <Typography variant="h2">Tab 0</Typography>
+              return (
+                <div style={{ width: '75rem' }}>
+                  <Post />
+                  <Post />
+                </div>
+              )
               break
             case 1:
               return <Typography variant="h2">Tab 1</Typography>
