@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { Grid, makeStyles, Paper } from '@material-ui/core'
 import styled from 'styled-components'
-import { FavoriteBorder, Home } from '@material-ui/icons'
+import { ChatBubbleOutline, FavoriteBorder, Share } from '@material-ui/icons'
 import ShowMoreText from 'react-show-more-text'
 
 const useStyles = makeStyles(() => ({
@@ -63,14 +63,13 @@ const pages: React.FC = () => {
             </div>
             <div className="option">
               <button>
-                <Home />
+                <ChatBubbleOutline />
                 <span>19</span>
               </button>
             </div>
             <div className="option">
               <button>
-                <Home />
-                <span>19</span>
+                <Share />
               </button>
             </div>
           </Options>
@@ -146,6 +145,7 @@ const Body = styled.div`
       border-radius: 3rem;
       object-fit: cover;
       font-size: 0px !important;
+      margin-top: 0.6rem;
     }
 
     .post-text {
@@ -189,10 +189,6 @@ const Options = styled.div`
 
       :hover {
         color: ${(p) => p.theme.palette.secondary.main};
-
-        svg {
-          background-color: rgba(0, 0, 0, 0.2);
-        }
       }
 
       svg {
@@ -205,6 +201,15 @@ const Options = styled.div`
         padding: 0.5rem;
         border-radius: 50%;
         transition: background-color 300ms ease;
+
+        :hover {
+          background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        :active {
+          background-color: rgba(0, 0, 0, 0.08);
+          transition: color 100ms ease;
+        }
       }
 
       span {
@@ -222,6 +227,7 @@ const Header = styled.div`
 
   * {
     font-size: 1.5rem;
+    cursor: pointer;
   }
 
   h6 {
