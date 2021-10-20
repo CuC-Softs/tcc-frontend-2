@@ -20,7 +20,14 @@ const Home: React.FC = () => {
               {
                 liked: true,
                 likes: 2222,
-                disliked: false,
+                dislikes: 2222,
+                username: 'Placegold',
+                whenPosted: '36 min',
+                text: 'AAAAAAAAAAAAAAAAAAAAAAAAA'
+              },
+              {
+                liked: true,
+                likes: 2222,
                 dislikes: 2222,
                 username: 'Placegold',
                 whenPosted: '36 min',
@@ -28,33 +35,17 @@ const Home: React.FC = () => {
                 text: 'AAAAAAAAAAAAAAAAAAAAAAAAA'
               },
               {
-                liked: true,
                 likes: 2222,
-                disliked: false,
                 dislikes: 2222,
                 username: 'Placegold',
                 whenPosted: '36 min',
-                profileImage: '/background.svg',
                 text: 'AAAAAAAAAAAAAAAAAAAAAAAAA'
               },
               {
-                liked: true,
                 likes: 2222,
-                disliked: false,
                 dislikes: 2222,
                 username: 'Placegold',
                 whenPosted: '36 min',
-                profileImage: '/background.svg',
-                text: 'AAAAAAAAAAAAAAAAAAAAAAAAA'
-              },
-              {
-                liked: true,
-                likes: 2222,
-                disliked: false,
-                dislikes: 2222,
-                username: 'Placegold',
-                whenPosted: '36 min',
-                profileImage: '/background.svg',
                 text: 'AAAAAAAAAAAAAAAAAAAAAAAAA'
               }
             ]}

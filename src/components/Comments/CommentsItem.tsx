@@ -56,7 +56,7 @@ const Comments: React.FC<CommentsProps> = ({
   return (
     <Container>
       <div className="profile-image">
-        <img src={profileImage || '/no-profile-image.svg'} alt="" />
+        <img src={profileImage || '/no-profile-image.png'} alt="" />
       </div>
       <div className="profile-body">
         <div className="header">
@@ -74,7 +74,7 @@ const Comments: React.FC<CommentsProps> = ({
                   }}
                 />
               </button>
-              <span>{likes}</span>
+              <span>{wasLiked ? likes + 1 : likes}</span>
             </div>
             <div className="rating">
               <button type="button" onClick={() => handleRating('negative')}>
@@ -84,7 +84,7 @@ const Comments: React.FC<CommentsProps> = ({
                   }}
                 />
               </button>
-              <span>{dislikes}</span>
+              <span>{wasDisliked ? dislikes + 1 : dislikes}</span>
             </div>
           </div>
         </div>

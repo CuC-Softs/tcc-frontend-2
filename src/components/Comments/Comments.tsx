@@ -18,6 +18,6 @@ const Container = styled.div`
   overflow-y: auto;
 
   li + li {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
   }
 `
