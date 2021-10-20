@@ -20,21 +20,8 @@ import {
   Share
 } from '@material-ui/icons'
 import ShowMoreText from 'react-show-more-text'
-import CommentsItem from './Comments/CommentsItem'
+import CommentsItem, { CommentsProps } from './Comments/CommentsItem'
 import Comments from './Comments/Comments'
-import theme from '../styles/theme'
-
-interface CommentsProps {
-  username: string
-  whenPosted: string
-  liked: boolean
-  likes: number
-  disliked: boolean
-  dislikes: number
-  profileImage?: string
-  text: string
-}
-
 interface PostProps {
   username: string
   profileImage?: string
@@ -181,49 +168,17 @@ const Post: React.FC<PostProps> = ({
           <Comments>
             {comments ? (
               comments.map((e, i) => (
-                <CommentsItem key={i}>
-                  <div className="profile-image">
-                    <img
-                      src={e.profileImage || '/no-profile-image.svg'}
-                      alt=""
-                    />
-                  </div>
-                  <div className="profile-body">
-                    <div className="header">
-                      <span>{e.username}</span>
-                      <span>{e.whenPosted}</span>
-                    </div>
-                    <div className="post">
-                      <span>{e.text}</span>
-                      <div className="actions">
-                        <div className="rating">
-                          <button>
-                            <ArrowUpward
-                              style={{
-                                color: e.liked
-                                  ? theme.palette.primary.main
-                                  : undefined
-                              }}
-                            />
-                          </button>
-                          <span>{e.likes}</span>
-                        </div>
-                        <div className="rating">
-                          <button>
-                            <ArrowDownward
-                              style={{
-                                color: e.disliked
-                                  ? theme.palette.error.main
-                                  : undefined
-                              }}
-                            />
-                          </button>
-                          <span>{e.dislikes}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CommentsItem>
+                <CommentsItem
+                  key={i}
+                  username={e.username}
+                  whenPosted={e.whenPosted}
+                  liked={e.liked}
+                  likes={e.likes}
+                  disliked={e.disliked}
+                  dislikes={e.dislikes}
+                  profileImage={e.profileImage}
+                  text={e.text}
+                />
               ))
             ) : (
               <Typography variant="h2">No comments</Typography>

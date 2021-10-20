@@ -1,9 +1,96 @@
 // eslint-disable-next-line no-use-before-define
-import React from 'react'
+import React, { useState } from 'react'
+import { ArrowUpward, ArrowDownward } from '@material-ui/icons'
 import styled from 'styled-components'
+import theme from '../../styles/theme'
 
-const Comments: React.FC = ({ children }) => {
-  return <Container>{children}</Container>
+export interface CommentsProps {
+  username: string
+  whenPosted: string
+  liked?: boolean
+  likes?: number
+  disliked?: boolean
+  dislikes?: number
+  profileImage?: string
+  text: string
+}
+
+const Comments: React.FC<CommentsProps> = ({
+  disliked,
+  dislikes,
+  liked,
+  likes,
+  text,
+  username,
+  whenPosted,
+  profileImage
+}) => {
+  const [wasLiked, setWasLiked] = useState(liked || false)
+
+  const [wasDisliked, setWasDisliked] = useState(disliked || false)
+
+  const handleRating = (type: 'positive' | 'negative') => {
+    if (type === 'positive') {
+      if (wasDisliked) {
+        setWasDisliked(false)
+        setWasLiked(true)
+      }
+      if (wasLiked) {
+        setWasLiked(false)
+      } else {
+        setWasLiked(true)
+      }
+    } else {
+      if (wasLiked) {
+        setWasLiked(false)
+        setWasDisliked(true)
+      }
+      if (wasDisliked) {
+        setWasDisliked(false)
+      } else {
+        setWasDisliked(true)
+      }
+    }
+  }
+
+  return (
+    <Container>
+      <div className="profile-image">
+        <img src={profileImage || '/no-profile-image.svg'} alt="" />
+      </div>
+      <div className="profile-body">
+        <div className="header">
+          <span>{username}</span>
+          <span>{whenPosted}</span>
+        </div>
+        <div className="post">
+          <span>{text}</span>
+          <div className="actions">
+            <div className="rating">
+              <button type="button" onClick={() => handleRating('positive')}>
+                <ArrowUpward
+                  style={{
+                    color: wasLiked ? theme.palette.primary.main : undefined
+                  }}
+                />
+              </button>
+              <span>{likes}</span>
+            </div>
+            <div className="rating">
+              <button type="button" onClick={() => handleRating('negative')}>
+                <ArrowDownward
+                  style={{
+                    color: wasDisliked ? theme.palette.error.main : undefined
+                  }}
+                />
+              </button>
+              <span>{dislikes}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  )
 }
 
 export default Comments
