@@ -8,6 +8,17 @@ export default createGlobalStyle`
     box-sizing: border-box;
     font-size: 62.5%;
   }
+
+  a {
+    text-decoration: none;
+    color: unset;
+    cursor: pointer !important;
+
+    * {
+      cursor: pointer !important;
+    }
+  }
+
   html {
     display: flex;
     min-height: -webkit-fill-available;

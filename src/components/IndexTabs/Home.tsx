@@ -9,6 +9,7 @@ const Home: React.FC = () => {
       <Posts>
         <li>
           <Post
+            group="Placeholder"
             likes={9}
             description={
               'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque deserunt, maxime et quae odit esse expedita doloremque ex tenetur placeat alias sit est consequatur eaque molestiae! Fugiat provident recusandae eaque?'
@@ -54,6 +55,7 @@ const Home: React.FC = () => {
         </li>
         <li>
           <Post
+            group="Placeholder"
             description={
               'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque deserunt, maxime et quae odit esse expedita doloremque ex tenetur placeat alias sit est consequatur eaque molestiae! Fugiat provident recusandae eaque?'
             }
@@ -98,6 +100,7 @@ const Home: React.FC = () => {
         </li>
         <li>
           <Post
+            group="Placeholder"
             description={
               'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque deserunt, maxime et quae odit esse expedita doloremque ex tenetur placeat alias sit est consequatur eaque molestiae! Fugiat provident recusandae eaque?'
             }

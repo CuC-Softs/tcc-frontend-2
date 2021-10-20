@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-use-before-define
 import React, { useState } from 'react'
+import Link from 'next/link'
 import {
   Button,
   Grid,
@@ -22,6 +23,7 @@ import CommentsItem, { CommentsProps } from './Comments/CommentsItem'
 import Comments from './Comments/Comments'
 interface PostProps {
   username: string
+  group: string
   profileImage?: string
   whenPosted: string
   description: string
@@ -67,7 +69,8 @@ const Post: React.FC<PostProps> = ({
   likes,
   username,
   whenPosted,
-  profileImage
+  profileImage,
+  group
 }) => {
   const classes = useStyles()
 
@@ -85,15 +88,21 @@ const Post: React.FC<PostProps> = ({
         <Paper elevation={2} className={classes.paper}>
           <div className="main-content">
             <Side type="button">
-              <img
-                src={profileImage || '/no-profile-image.png'}
-                alt="profile image"
-              />
+              <Link href="#">
+                <img
+                  src={profileImage || '/no-profile-image.png'}
+                  alt="profile image"
+                />
+              </Link>
             </Side>
             <Body>
               <Header>
-                <h6>{username}</h6>
-                <span>- {whenPosted}</span>
+                <h6>
+                  <Link href="#">{username}</Link>
+                </h6>{' '}
+                <span>
+                  in <Link href="#">{group}</Link> - {whenPosted}
+                </span>
               </Header>
               <div className="post-data" ref={setPostDataRef}>
                 <ShowMoreText

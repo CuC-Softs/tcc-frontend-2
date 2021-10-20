@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { ArrowUpward, ArrowDownward } from '@material-ui/icons'
 import styled from 'styled-components'
 import theme from '../../styles/theme'
+import Link from 'next/link'
 
 export interface CommentsProps {
   username: string
@@ -56,11 +57,15 @@ const Comments: React.FC<CommentsProps> = ({
   return (
     <Container>
       <div className="profile-image">
-        <img src={profileImage || '/no-profile-image.png'} alt="" />
+        <Link href="#">
+          <img src={profileImage || '/no-profile-image.png'} alt="" />
+        </Link>
       </div>
       <div className="profile-body">
         <div className="header">
-          <span>{username}</span>
+          <Link href="#">
+            <span>{username}</span>
+          </Link>
           <span>{whenPosted}</span>
         </div>
         <div className="post">
@@ -129,6 +134,10 @@ const Container = styled.li`
 
       span {
         font-size: 1.2rem;
+      }
+
+      span:first-child {
+        cursor: pointer;
       }
 
       span + span {
