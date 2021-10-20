@@ -6,7 +6,8 @@ import {
   makeStyles,
   Modal,
   Paper,
-  TextField
+  TextField,
+  Typography
 } from '@material-ui/core'
 import styled from 'styled-components'
 import {
@@ -21,6 +22,30 @@ import {
 import ShowMoreText from 'react-show-more-text'
 import CommentsItem from './Comments/CommentsItem'
 import Comments from './Comments/Comments'
+import theme from '../styles/theme'
+
+interface CommentsProps {
+  username: string
+  whenPosted: string
+  liked: boolean
+  likes: number
+  disliked: boolean
+  dislikes: number
+  profileImage?: string
+  text: string
+}
+
+interface PostProps {
+  username: string
+  profileImage?: string
+  whenPosted: string
+  description: string
+  image?: string
+  likes?: number
+  liked?: boolean
+  commentsQuantity?: number
+  comments?: CommentsProps[]
+}
 
 const useStyles = makeStyles((theme) => ({
   container: { width: '100%', height: '100%' },
@@ -48,12 +73,22 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const Post: React.FC = () => {
+const Post: React.FC<PostProps> = ({
+  comments,
+  commentsQuantity,
+  description,
+  image,
+  liked,
+  likes,
+  username,
+  whenPosted,
+  profileImage
+}) => {
   const classes = useStyles()
 
   const [postDataRef, setPostDataRef] = useState<HTMLDivElement | null>(null)
 
-  const [liked, setLiked] = useState(false)
+  const [wasLiked, setWasLiked] = useState(liked || false)
 
   const [openComments, setOpenComments] = React.useState(false)
 
@@ -65,12 +100,15 @@ const Post: React.FC = () => {
         <Paper elevation={2} className={classes.paper}>
           <div className="main-content">
             <Side type="button">
-              <img src="" alt="profile image" />
+              <img
+                src={profileImage || '/no-profile-image.png'}
+                alt="profile image"
+              />
             </Side>
             <Body>
               <Header>
-                <h6>Placeholder</h6>
-                <span>@Placeholder - 36 min</span>
+                <h6>{username}</h6>
+                <span>- {whenPosted}</span>
               </Header>
               <div className="post-data" ref={setPostDataRef}>
                 <ShowMoreText
@@ -81,25 +119,23 @@ const Post: React.FC = () => {
                   className="post-text"
                   truncatedEndingComponent={'... '}
                 >
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Alias repellat quae, quam, fugit placeat sed quos aliquam
-                  doloribus praesentium nisi facilis com
+                  {description}
                 </ShowMoreText>
-                <img src="/background.svg" alt="post image" />
+                {image && <img src={image} alt="post image" />}
               </div>
             </Body>
           </div>
           <Options>
             <div className="option">
-              <button type="button" onClick={() => setLiked(!liked)}>
-                {liked ? <Favorite /> : <FavoriteBorder />}
-                <span>19</span>
+              <button type="button" onClick={() => setWasLiked(!wasLiked)}>
+                {wasLiked ? <Favorite /> : <FavoriteBorder />}
+                <span>{likes || 0}</span>
               </button>
             </div>
             <div className="option">
               <button type="button" onClick={handleModal}>
                 <ChatBubbleOutline />
-                <span>19</span>
+                <span>{commentsQuantity || 0}</span>
               </button>
             </div>
             <div className="option">
@@ -113,13 +149,17 @@ const Post: React.FC = () => {
       <Modal open={openComments} onClose={handleModal}>
         <CommentsContainer>
           <div className="title">
-            <h6>All Comments (299)</h6>
+            <h6>All Comments ({commentsQuantity || 0})</h6>
             <button type="button" onClick={handleModal}>
               <ArrowBack />
             </button>
           </div>
           <div className="add-comment">
-            <img src="" alt="profile image" className="profile-image" />
+            <img
+              src={profileImage || 'no-profile-image.png'}
+              alt="profile image"
+              className="profile-image"
+            />
             <TextField
               multiline
               placeholder="Add a comment..."
@@ -139,87 +179,55 @@ const Post: React.FC = () => {
             </Button>
           </div>
           <Comments>
-            <CommentsItem>
-              <div className="profile-image">
-                <img src="" alt="" />
-              </div>
-              <div className="profile-body">
-                <div className="header">
-                  <span>AAAAAAAAAA</span>
-                  <span>AAAAAAAAAA</span>
-                </div>
-                <div className="post">
-                  <span>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Corporis nisi cum saepe eos excepturi ex, esse quae aliquam
-                    iste voluptatibus veniam aperiam! Corporis impedit fugiat
-                    recusandae laboriosam quidem, natus incidunt!
-                  </span>
-                  <div className="actions">
-                    <button>
-                      <ArrowUpward />
-                    </button>
-                    <button>
-                      <ArrowDownward />
-                    </button>
+            {comments ? (
+              comments.map((e, i) => (
+                <CommentsItem key={i}>
+                  <div className="profile-image">
+                    <img
+                      src={e.profileImage || '/no-profile-image.svg'}
+                      alt=""
+                    />
                   </div>
-                </div>
-              </div>
-            </CommentsItem>
-            <CommentsItem>
-              <div className="profile-image">
-                <img src="" alt="" />
-              </div>
-              <div className="profile-body">
-                <div className="header">
-                  <span>AAAAAAAAAA</span>
-                  <span>AAAAAAAAAA</span>
-                </div>
-                <div className="post">
-                  <span>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Corporis nisi cum saepe eos excepturi ex, esse quae aliquam
-                    iste voluptatibus veniam aperiam! Corporis impedit fugiat
-                    recusandae laboriosam quidem, natus incidunt!
-                  </span>
-                  <div className="actions">
-                    <button>
-                      <ArrowUpward />
-                    </button>
-                    <button>
-                      <ArrowDownward />
-                    </button>
+                  <div className="profile-body">
+                    <div className="header">
+                      <span>{e.username}</span>
+                      <span>{e.whenPosted}</span>
+                    </div>
+                    <div className="post">
+                      <span>{e.text}</span>
+                      <div className="actions">
+                        <div className="rating">
+                          <button>
+                            <ArrowUpward
+                              style={{
+                                color: e.liked
+                                  ? theme.palette.primary.main
+                                  : undefined
+                              }}
+                            />
+                          </button>
+                          <span>{e.likes}</span>
+                        </div>
+                        <div className="rating">
+                          <button>
+                            <ArrowDownward
+                              style={{
+                                color: e.disliked
+                                  ? theme.palette.error.main
+                                  : undefined
+                              }}
+                            />
+                          </button>
+                          <span>{e.dislikes}</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </CommentsItem>
-            <CommentsItem>
-              <div className="profile-image">
-                <img src="" alt="" />
-              </div>
-              <div className="profile-body">
-                <div className="header">
-                  <span>AAAAAAAAAA</span>
-                  <span>AAAAAAAAAA</span>
-                </div>
-                <div className="post">
-                  <span>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Corporis nisi cum saepe eos excepturi ex, esse quae aliquam
-                    iste voluptatibus veniam aperiam! Corporis impedit fugiat
-                    recusandae laboriosam quidem, natus incidunt!
-                  </span>
-                  <div className="actions">
-                    <button>
-                      <ArrowUpward />
-                    </button>
-                    <button>
-                      <ArrowDownward />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </CommentsItem>
+                </CommentsItem>
+              ))
+            ) : (
+              <Typography variant="h2">No comments</Typography>
+            )}
           </Comments>
         </CommentsContainer>
       </Modal>

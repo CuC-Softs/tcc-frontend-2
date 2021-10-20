@@ -52,6 +52,20 @@ const Container = styled.li`
     .post {
       color: ${(p) => p.theme.palette.text.primary};
 
+      .actions {
+        display: flex;
+        width: 100%;
+
+        .rating {
+          display: flex;
+          align-items: center;
+
+          & + div {
+            margin-left: 0.5rem;
+          }
+        }
+      }
+
       span {
         font-size: 1.5rem;
         margin-bottom: 0.3rem;
@@ -65,6 +79,7 @@ const Container = styled.li`
         width: 3rem;
         height: 3rem;
         padding: 0.5rem;
+        display: flex;
 
         svg {
           height: 100%;
@@ -73,6 +88,7 @@ const Container = styled.li`
           margin: 0;
           padding-bottom: 0 !important;
           margin-bottom: 0 !important;
+          margin-right: 0.5rem;
         }
 
         :hover {
