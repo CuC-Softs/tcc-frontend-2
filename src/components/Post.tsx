@@ -12,8 +12,6 @@ import {
 import styled from 'styled-components'
 import {
   ArrowBack,
-  ArrowDownward,
-  ArrowUpward,
   ChatBubbleOutline,
   Favorite,
   FavoriteBorder,
@@ -116,7 +114,23 @@ const Post: React.FC<PostProps> = ({
             <div className="option">
               <button type="button" onClick={() => setWasLiked(!wasLiked)}>
                 {wasLiked ? <Favorite /> : <FavoriteBorder />}
-                <span>{likes || 0}</span>
+                <span>
+                  {((): number => {
+                    if (likes === 0 || likes === undefined) {
+                      if (wasLiked) {
+                        return 1
+                      } else {
+                        return 0
+                      }
+                    } else {
+                      if (wasLiked) {
+                        return likes + 1
+                      } else {
+                        return likes
+                      }
+                    }
+                  })()}
+                </span>
               </button>
             </div>
             <div className="option">
