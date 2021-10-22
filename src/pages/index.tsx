@@ -5,7 +5,13 @@ import {
   Typography
 } from '@material-ui/core'
 
-import { Add, Chat, HomeOutlined, Notifications } from '@material-ui/icons'
+import {
+  Add,
+  Chat,
+  HomeOutlined,
+  Notifications,
+  Person
+} from '@material-ui/icons'
 
 // eslint-disable-next-line no-use-before-define
 import React from 'react'
@@ -13,6 +19,7 @@ import styled from 'styled-components'
 import Body from '../components/Body'
 import Header from '../components/Header'
 import Home from '../components/IndexTabs/Home'
+import Navigation from '../components/Navigation'
 
 const Dashboard: React.FC = () => {
   const [tab, setTab] = React.useState(0)
@@ -62,21 +69,10 @@ const Dashboard: React.FC = () => {
         })()}
       </Body>
       <div className="nav">
-        <BottomNavigation
-          showLabels
+        <Navigation
           value={tab}
-          onChange={(event, newValue) => {
-            setTab(newValue)
-          }}
-        >
-          <BottomNavigationAction label="Home" icon={<HomeOutlined />} />
-          <BottomNavigationAction label="Post" icon={<Add />} />
-          <BottomNavigationAction label="Chat" icon={<Chat />} />
-          <BottomNavigationAction
-            label="Notification"
-            icon={<Notifications />}
-          />
-        </BottomNavigation>
+          onChange={(event, newValue) => setTab(newValue)}
+        />
       </div>
     </Container>
   )
