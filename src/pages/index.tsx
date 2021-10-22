@@ -1,17 +1,4 @@
-import {
-  BottomNavigation,
-  BottomNavigationAction,
-  TextField,
-  Typography
-} from '@material-ui/core'
-
-import {
-  Add,
-  Chat,
-  HomeOutlined,
-  Notifications,
-  Person
-} from '@material-ui/icons'
+import { TextField, Typography } from '@material-ui/core'
 
 // eslint-disable-next-line no-use-before-define
 import React from 'react'
