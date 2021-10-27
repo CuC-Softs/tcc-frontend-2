@@ -383,6 +383,15 @@ const CommentsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @keyframes fadeIn {
+    from {
+      transform: translate(-50%, 100%);
+    }
+    to {
+      transform: translate(-50%, 0);
+    }
+  }
+  animation: fadeIn 0.5s ease;
 
   .title {
     width: 100%;
