@@ -1,4 +1,13 @@
-import { Button, makeStyles, Theme } from '@material-ui/core'
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  makeStyles,
+  Theme,
+  Typography
+} from '@material-ui/core'
 import { Person } from '@material-ui/icons'
 import styled from 'styled-components'
 
@@ -17,19 +26,22 @@ const profile: React.FC = () => {
 
   return (
     <Container>
-      <img
-        className="banner"
-        src="https://www.correio24horas.com.br//fileadmin/_processed_/0/c/csm_nego_nei_cfb7caaac3.jpg"
-        alt="banner"
-      />
       <div className="profile">
+        <img
+          className="banner"
+          src="https://www.correio24horas.com.br//fileadmin/_processed_/0/c/csm_nego_nei_cfb7caaac3.jpg"
+          alt="banner"
+        />
         <div className="image-and-username">
           <img
             src="https://pbs.twimg.com/media/EeTDgb4WoAAcrmS.jpg"
             alt=""
             className="profile-image"
           />
-          <h5>@Placeholder</h5>
+          <h5>
+            Placeholder da Silve
+            <br /> - @Placeholder
+          </h5>
           <Button
             variant="contained"
             color="primary"
@@ -38,11 +50,125 @@ const profile: React.FC = () => {
           >
             Follow
           </Button>
-        </div>
-        <div className="profile-data">
-          <h5 className="name">Placeholder da silva</h5>
+          <p style={{ marginTop: '1rem' }}>1000 followers</p>
         </div>
       </div>
+      <div className="card-container">
+        <div className="card">
+          <span className="label">- Bio</span>
+          <Bio>
+            <h1 className="title">Bio de Placeholder</h1>
+            <p className="text">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit
+              nam totam quae ut molestias maxime dolorem laboriosam dolore
+              pariatur in. Ad, molestias odit esse accusamus quod facilis
+              recusandae fugit pariatur.
+            </p>
+          </Bio>
+        </div>
+        <div className="card">
+          <span className="label">- Groups</span>
+          <ul className="group-list">
+            <li className="group">
+              <Card style={{ height: '100%', borderRadius: '1rem' }}>
+                <CardMedia
+                  component="img"
+                  alt="green iguana"
+                  height="140"
+                  image="https://estatico.precolandia.com.br/images/product/Peneira-de-Plastico-155cm-Branca-Utility-pre%C3%A7olandia-739189-0d.jpg"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h4" component="div">
+                    Lizard
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    style={{ fontSize: '1.3rem' }}
+                  >
+                    Lizards are a widespread group of squamate reptiles, with
+                    over 6,000 species, ranging across all continents except
+                    Antarctica
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="medium" style={{ fontSize: '1.27rem' }}>
+                    Open
+                  </Button>
+                  <Button size="medium" style={{ fontSize: '1.27rem' }}>
+                    Ask to Join
+                  </Button>
+                </CardActions>
+              </Card>
+            </li>
+            <li className="group">
+              <Card style={{ height: '100%', borderRadius: '1rem' }}>
+                <CardMedia
+                  component="img"
+                  alt="green iguana"
+                  height="140"
+                  image="https://estatico.precolandia.com.br/images/product/Peneira-de-Plastico-155cm-Branca-Utility-pre%C3%A7olandia-739189-0d.jpg"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h4" component="div">
+                    Lizard
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    style={{ fontSize: '1.3rem' }}
+                  >
+                    Lizards are a widespread group of squamate reptiles, with
+                    over 6,000 species, ranging across all continents except
+                    Antarctica
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="medium" style={{ fontSize: '1.27rem' }}>
+                    Open
+                  </Button>
+                  <Button size="medium" style={{ fontSize: '1.27rem' }}>
+                    Ask to Join
+                  </Button>
+                </CardActions>
+              </Card>
+            </li>
+            <li className="group">
+              <Card style={{ height: '100%', borderRadius: '1rem' }}>
+                <CardMedia
+                  component="img"
+                  alt="green iguana"
+                  height="140"
+                  image="https://estatico.precolandia.com.br/images/product/Peneira-de-Plastico-155cm-Branca-Utility-pre%C3%A7olandia-739189-0d.jpg"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h4" component="div">
+                    Lizard
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    style={{ fontSize: '1.3rem' }}
+                  >
+                    Lizards are a widespread group of squamate reptiles, with
+                    over 6,000 species, ranging across all continents except
+                    Antarctica
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="medium" style={{ fontSize: '1.27rem' }}>
+                    Open
+                  </Button>
+                  <Button size="medium" style={{ fontSize: '1.27rem' }}>
+                    Ask to Join
+                  </Button>
+                </CardActions>
+              </Card>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div className="background" />
     </Container>
   )
 }
@@ -60,6 +186,74 @@ const Container = styled.div`
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+
+  .background {
+    background: url('/background.svg');
+    background-size: cover;
+    z-index: -9999;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .card-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    padding: 2rem;
+    max-width: 100%;
+    min-height: fit-content;
+    justify-content: center;
+    flex: 1;
+
+    .card {
+      height: 50rem;
+      min-width: 30rem;
+      width: 100%;
+      border-radius: 1rem;
+      box-shadow: 1px 4px 4px rgba(0, 0, 0, 0.25);
+      background: ${(p) => p.theme.palette.background.default};
+      margin-right: auto;
+      margin-top: 1rem;
+
+      position: relative;
+
+      .label {
+        position: absolute;
+        top: -5%;
+        left: 1rem;
+        font-size: 1.8rem;
+        text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.25);
+        color: #fff;
+      }
+
+      .group-list {
+        list-style: none;
+        display: flex;
+        padding: 2rem;
+        height: 100%;
+        overflow-x: auto;
+
+        .group {
+          width: 35rem;
+          min-width: 35rem;
+          height: 100%;
+
+          & + li {
+            margin-left: 2rem;
+          }
+        }
+      }
+    }
+
+    .card:first-of-type {
+      width: 30%;
+      margin-right: 2rem;
+    }
+  }
 
   .banner {
     position: absolute;
@@ -83,6 +277,7 @@ const Container = styled.div`
     left: 0;
     right: 0;
     width: 100%;
+    min-height: 36rem;
     height: 36rem;
     padding: 2rem;
     box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
@@ -106,6 +301,7 @@ const Container = styled.div`
         font-size: 2rem;
         color: ${(p) => p.theme.palette.text.primary};
         margin-top: 0.8rem;
+        text-align: center;
       }
 
       .profile-image {
@@ -125,20 +321,28 @@ const Container = styled.div`
         background-repeat: no-repeat;
       }
     }
+  }
+`
 
-    .profile-data {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-left: 2rem;
+const Bio = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
 
-      .name {
-        font-size: 1.8rem;
-        color: ${(p) => p.theme.palette.text.primary};
-        margin-top: 0.8rem;
-      }
-    }
+  .title {
+    font-size: 2rem;
+    color: ${(p) => p.theme.palette.text.primary};
+    font-weight: 600;
+    opacity: 0.8;
+  }
+
+  .text {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    color: ${(p) => p.theme.palette.text.secondary};
+    line-height: 2rem;
   }
 `
