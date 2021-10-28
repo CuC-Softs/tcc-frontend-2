@@ -58,6 +58,7 @@ interface LoginProps {
   email: string
   gender: string
   terms: boolean
+  position?: string
 }
 
 const initialValues: LoginProps = {
@@ -66,7 +67,8 @@ const initialValues: LoginProps = {
   confirm_password: '',
   email: '',
   gender: '',
-  terms: false
+  terms: false,
+  position: 'student'
 }
 
 const schema = Yup.object().shape({
@@ -256,6 +258,33 @@ const SignUp: React.FC = () => {
                 }
               }}
             />
+            <FormControl component="fieldset" style={{ marginTop: 5 }}>
+              <FormLabel component="legend">Position</FormLabel>
+              <RadioGroup
+                aria-label="position"
+                id="position"
+                name="position"
+                value={formik.values.position}
+                onChange={formik.handleChange}
+                style={{ display: 'initial' }}
+              >
+                <FormControlLabel
+                  value="teacher"
+                  control={<Radio />}
+                  label="Teacher"
+                />
+                <FormControlLabel
+                  value="employee"
+                  control={<Radio />}
+                  label="Employee"
+                />
+                <FormControlLabel
+                  value="student"
+                  control={<Radio />}
+                  label="Student"
+                />
+              </RadioGroup>
+            </FormControl>
             <FormControlLabel
               control={
                 <Checkbox
