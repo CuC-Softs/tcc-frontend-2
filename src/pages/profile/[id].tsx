@@ -5,13 +5,12 @@ import {
   CardContent,
   CardMedia,
   makeStyles,
-  Theme,
   Typography
 } from '@material-ui/core'
 import { Person } from '@material-ui/icons'
 import styled from 'styled-components'
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   follow: {
     width: '70%',
     height: '3rem',
