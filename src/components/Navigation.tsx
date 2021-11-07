@@ -2,13 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React from 'react' // eslint-disable-line no-use-before-define
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core'
-import {
-  HomeOutlined,
-  Add,
-  Chat,
-  Notifications,
-  Person
-} from '@material-ui/icons'
+import { HomeOutlined, Add, Chat, Notifications } from '@material-ui/icons'
 
 interface NavigationProps {
   value: any
@@ -22,7 +16,6 @@ const Navigation: React.FC<NavigationProps> = ({ value, onChange }) => {
       <BottomNavigationAction label="Post" icon={<Add />} />
       <BottomNavigationAction label="Chat" icon={<Chat />} />
       <BottomNavigationAction label="Notification" icon={<Notifications />} />
-      <BottomNavigationAction label="Profile" icon={<Person />} />
     </BottomNavigation>
   )
 }

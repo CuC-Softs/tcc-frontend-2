@@ -5,6 +5,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Body from '../components/Body'
 import Header from '../components/Header'
+import CreatePost from '../components/IndexTabs/CreatePost'
 import Home from '../components/IndexTabs/Home'
 import Navigation from '../components/Navigation'
 
@@ -40,7 +41,7 @@ const Dashboard: React.FC = () => {
               return <Home />
               break
             case 1:
-              return <Typography variant="h2">Tab 1</Typography>
+              return <CreatePost />
               break
             case 2:
               return <Typography variant="h2">Tab 2</Typography>
@@ -90,5 +91,6 @@ const Container = styled.div`
     background: ${(p) => p.theme.palette.primary.light};
     width: 50%;
     border-radius: 0.3rem;
+    margin-inline: 1rem;
   }
 `
