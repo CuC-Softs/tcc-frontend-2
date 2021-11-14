@@ -216,11 +216,11 @@ export default CreatePost
 
 const Container = styled.div`
   padding: 0.5rem;
-  width: 80%;
-  height: 80%;
+  width: 70%;
+  height: 95%;
   min-height: fit-content;
 
-  @media (max-width: 430px) {
+  @media (orientation: portrait) {
     height: 95%;
     width: 95%;
   }
@@ -268,7 +268,6 @@ const Body = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     min-height: fit-content;
 
