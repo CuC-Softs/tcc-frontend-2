@@ -1,10 +1,20 @@
 // eslint-disable-next-line no-use-before-define
 import React from 'react'
-import { Grid, makeStyles, Paper, TextField } from '@material-ui/core'
+import {
+  Fab,
+  Grid,
+  IconButton,
+  makeStyles,
+  Menu,
+  MenuItem,
+  Paper,
+  TextField
+} from '@material-ui/core'
 import styled from 'styled-components'
-import { ChatBubbleOutline, Favorite, Share } from '@material-ui/icons'
+import { ChatBubbleOutline, Favorite, Send, Share } from '@material-ui/icons'
 import { DropzoneArea } from 'material-ui-dropzone'
 import { useFormik } from 'formik'
+import theme from '../../styles/theme'
 
 interface PostProps {
   username: string
@@ -51,7 +61,7 @@ const CreatePost: React.FC = () => {
 
   const post: PostProps = {
     username: '@Placeholder',
-    group: 'Placeholder group',
+    group: 'Select a group',
     profileImage: '',
     description: '',
     image: undefined
@@ -63,6 +73,15 @@ const CreatePost: React.FC = () => {
       console.log(values)
     }
   })
+
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const openSelectGroup = Boolean(anchorEl)
+  const handleClickSelectGroup = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleCloseSelectGroup = () => {
+    setAnchorEl(null)
+  }
 
   return (
     <div
@@ -86,7 +105,52 @@ const CreatePost: React.FC = () => {
               </Side>
               <Body>
                 <Header>
-                  <h6>{post.username}</h6> <span>in {post.group}</span>
+                  <h6>{post.username}</h6> <span>in</span>{' '}
+                  <IconButton
+                    onClick={handleClickSelectGroup}
+                    style={{ padding: 0 }}
+                  >
+                    <span style={{ color: theme.palette.primary.main }}>
+                      {post.group}
+                    </span>
+                  </IconButton>
+                  <Menu
+                    id="long-menu"
+                    MenuListProps={{
+                      'aria-labelledby': 'long-button'
+                    }}
+                    anchorEl={anchorEl}
+                    open={openSelectGroup}
+                    onClose={handleCloseSelectGroup}
+                    PaperProps={{
+                      style: {
+                        maxHeight: '60rem',
+                        width: '30rem'
+                      }
+                    }}
+                  >
+                    {[
+                      'Placeholder 1',
+                      'Placeholder 2',
+                      'Placeholder 3',
+                      'Placeholder 4',
+                      'Placeholder 5',
+                      'Placeholder 6',
+                      'Placeholder 7',
+                      'Placeholder 8',
+                      'Placeholder 9',
+                      'Placeholder 10'
+                    ].map((option) => (
+                      <MenuItem
+                        key={option}
+                        selected={option === post.group}
+                        onClick={handleCloseSelectGroup}
+                        style={{ fontSize: '1.5rem' }}
+                      >
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </Menu>
                 </Header>
                 <div className="post-data">
                   <TextField
@@ -126,6 +190,23 @@ const CreatePost: React.FC = () => {
             </Options>
           </Paper>
         </Grid>
+        <Fab
+          variant="extended"
+          color="primary"
+          size="large"
+          aria-label="add"
+          style={{
+            fontSize: '3rem',
+            position: 'fixed',
+            right: '9rem',
+            bottom: '9rem'
+          }}
+        >
+          <Send
+            style={{ marginRight: '0.5rem', width: 'auto', height: '2.5rem' }}
+          />
+          Post
+        </Fab>
       </Container>
     </div>
   )
