@@ -135,6 +135,33 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                     </Card>
                   </li>
                 ))}
+                <li className="group">
+                  <Card style={{ height: '100%', borderRadius: '1rem' }}>
+                    <CardMedia
+                      component="img"
+                      alt="Create Group"
+                      height="140"
+                      image={
+                        'https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JvdXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80'
+                      }
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h4" component="div">
+                        Create Group
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button
+                        size="medium"
+                        style={{ fontSize: '1.5rem' }}
+                        color="primary"
+                        variant="outlined"
+                      >
+                        Create
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </li>
               </ul>
             </div>
           </div>
