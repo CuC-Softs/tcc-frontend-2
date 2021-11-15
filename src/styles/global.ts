@@ -48,7 +48,7 @@ export default createGlobalStyle`
     -webkit-font-smoothing: antialiased;
   }
   body, input, button, p {
-    font: 16px 'Varela Round', sans-serif;
+    font: 16px 'Roboto', sans-serif;
   }
   button {
     &:hover {
