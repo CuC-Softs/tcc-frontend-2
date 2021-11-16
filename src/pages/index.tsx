@@ -94,7 +94,8 @@ export default Landing
 const Container = styled.div`
   display: flex;
   width: 100%;
-  height: 100%;
+  height: fit-content;
+  min-height: 100vh;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
@@ -135,6 +136,16 @@ const Container = styled.div`
         text-align: center;
         width: 100%;
       }
+
+      @media (orientation: portrait) {
+        .title {
+          font-size: 7rem;
+        }
+
+        .subtitle {
+          font-size: 1.8rem;
+        }
+      }
     }
   }
 
@@ -145,17 +156,36 @@ const Container = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
 
     .card {
       width: 40%;
-      height: 70% !important;
+      height: 60rem !important;
       height: fit-content;
       display: flex;
       flex-direction: column;
       align-items: center;
       font-size: 2rem;
       box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.1);
+      margin-inline: 5%;
+      max-width: 45rem;
+    }
+
+    @media (orientation: portrait) {
+      flex-direction: column;
+      justify-content: unset;
+
+      .card {
+        max-width: unset;
+        width: 70%;
+        margin: 5%;
+        min-width: 30rem;
+        height: unset !important;
+
+        :last-child {
+          margin-top: 0;
+        }
+      }
     }
   }
 `
