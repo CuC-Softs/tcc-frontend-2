@@ -50,6 +50,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       setCookie(undefined, 'ifconnect.user', String(user.id), {
         expires: new Date(token.expires_at)
       })
+      Router.push('/dashboard')
       setIsLoading(false)
     } catch (error) {
       toast.error('Erro na autenticação', { position: 'top-right' })
@@ -66,7 +67,9 @@ export const AuthProvider: React.FC = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, signIn, logOut, isLoading }}>
+    <AuthContext.Provider
+      value={{ user, signIn, logOut, isLoading, setIsLoading }}
+    >
       {children}
     </AuthContext.Provider>
   )
