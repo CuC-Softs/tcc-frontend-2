@@ -66,4 +66,10 @@ export default createGlobalStyle`
     height: 100%;
     min-height: fit-content;
   }
+
+  .swal2-container {
+    * {
+      font-size: 100%;
+    }
+  }
 `
