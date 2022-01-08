@@ -27,6 +27,27 @@ import api from '../services/api'
 import withReactContent from 'sweetalert2-react-content'
 import sweetAlert2 from 'sweetalert2'
 import { useRouter } from 'next/router'
+import { useAuth } from '../contexts/AuthContext'
+import Loading from '../components/Loading'
+import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { 'ifconnect.token': token } = parseCookies(ctx)
+
+  if (token) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
+}
 
 const useStyles = makeStyles((theme) => ({
   paperStyle: {
@@ -56,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 interface LoginProps {
+  name: string
   username: string
   password: string
   confirm_password: string
@@ -66,6 +88,7 @@ interface LoginProps {
 }
 
 const initialValues: LoginProps = {
+  name: '',
   username: '',
   password: '',
   confirm_password: '',
@@ -76,6 +99,7 @@ const initialValues: LoginProps = {
 }
 
 const schema = Yup.object().shape({
+  name: Yup.string().required('Required Field.'),
   username: Yup.string().required('Required Field.'),
   password: Yup.string()
     .required('Required Field.')
@@ -97,12 +121,16 @@ const SignUp: React.FC = () => {
 
   const router = useRouter()
 
+  const { isLoading, setIsLoading } = useAuth()
+
   const formik = useFormik({
     initialValues,
     onSubmit: async (values) => {
       try {
+        setIsLoading(true)
         await api.post('/users', {
-          name: values.username,
+          name: values.name,
+          username: values.username,
           email: values.email,
           password: values.password,
           position: values.position,
@@ -119,7 +147,9 @@ const SignUp: React.FC = () => {
           .then(() => {
             router.push('/')
           })
+        setIsLoading(false)
       } catch (err) {
+        setIsLoading(false)
         swal.fire({
           title: (
             <p>Error! {err.response.data.errors[0].message || err.message}</p>
@@ -137,6 +167,7 @@ const SignUp: React.FC = () => {
 
   useEffect(() => {
     if (
+      (!!formik.errors.name && formik.touched.name) ||
       (!!formik.errors.username && formik.touched.username) ||
       (!!formik.errors.password && formik.touched.password) ||
       (!!formik.errors.confirm_password && formik.touched.confirm_password) ||
@@ -179,6 +210,26 @@ const SignUp: React.FC = () => {
             </Typography>
           </Grid>
           <form noValidate onSubmit={formik.handleSubmit}>
+            <TextField
+              id="name"
+              name="name"
+              onChange={formik.handleChange}
+              autoComplete="name"
+              error={formik.touched.name && !!formik.errors.name}
+              helperText={formik.touched.name && formik.errors.name}
+              autoFocus
+              value={formik.values.name}
+              label="Name"
+              placeholder="Enter Name"
+              type="text"
+              fullWidth
+              required
+              InputProps={{
+                inputProps: {
+                  className: classes.textField
+                }
+              }}
+            />
             <TextField
               id="username"
               name="username"
@@ -354,6 +405,7 @@ const SignUp: React.FC = () => {
           </Typography>
         </Paper>
       </Grid>
+      {isLoading && <Loading />}
     </Container>
   )
 }
