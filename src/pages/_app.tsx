@@ -5,6 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../styles/theme'
 import GlobalStyle from '../styles/global'
 import { useEffect } from 'react'
+import { AuthProvider } from '../contexts/AuthContext'
 
 const IFConnect = (props) => {
   const { Component, pageProps } = props
@@ -27,9 +28,11 @@ const IFConnect = (props) => {
       </Head>
       <ThemeProvider theme={theme}>
         <StyledComponentThemeProvider theme={theme}>
-          <CssBaseline />
-          <Component {...pageProps} />
-          <GlobalStyle />
+          <AuthProvider>
+            <CssBaseline />
+            <Component {...pageProps} />
+            <GlobalStyle />
+          </AuthProvider>
         </StyledComponentThemeProvider>
       </ThemeProvider>
     </>
