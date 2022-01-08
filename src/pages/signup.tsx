@@ -23,6 +23,10 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import theme from '../styles/theme'
 import Link from 'next/link'
+import api from '../services/api'
+import withReactContent from 'sweetalert2-react-content'
+import sweetAlert2 from 'sweetalert2'
+import { useRouter } from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
   paperStyle: {
@@ -89,10 +93,42 @@ const schema = Yup.object().shape({
 const SignUp: React.FC = () => {
   const classes = useStyles()
 
+  const swal = withReactContent(sweetAlert2)
+
+  const router = useRouter()
+
   const formik = useFormik({
     initialValues,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
+    onSubmit: async (values) => {
+      try {
+        await api.post('/users', {
+          name: values.username,
+          email: values.email,
+          password: values.password,
+          position: values.position,
+          gender: values.gender
+        })
+
+        swal
+          .fire({
+            title: <p>Registration performed successfully!</p>,
+            icon: 'success',
+            iconColor: 'green',
+            confirmButtonColor: 'green'
+          })
+          .then(() => {
+            router.push('/')
+          })
+      } catch (err) {
+        swal.fire({
+          title: (
+            <p>Error! {err.response.data.errors[0].message || err.message}</p>
+          ),
+          icon: 'error',
+          iconColor: 'red',
+          confirmButtonColor: 'red'
+        })
+      }
     },
     validationSchema: schema
   })
