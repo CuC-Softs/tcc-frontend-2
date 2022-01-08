@@ -1,4 +1,6 @@
 import { TextField, Typography } from '@material-ui/core'
+import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
 
 // eslint-disable-next-line no-use-before-define
 import React from 'react'
@@ -64,6 +66,23 @@ const Dashboard: React.FC = () => {
       </div>
     </Container>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { 'ifconnect.token': token } = parseCookies(ctx)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
 }
 
 export default Dashboard
