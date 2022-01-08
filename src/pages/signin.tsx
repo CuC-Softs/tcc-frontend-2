@@ -17,9 +17,27 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import theme from '../styles/theme'
 import Link from 'next/link'
-import api from '../services/api'
-import withReactContent from 'sweetalert2-react-content'
-import sweetAlert2 from 'sweetalert2'
+import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
+import { useAuth } from '../contexts/AuthContext'
+import Loading from '../components/Loading'
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { 'ifconnect.token': token } = parseCookies(ctx)
+
+  if (token) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
+}
 
 const useStyles = makeStyles((theme) => ({
   paperStyle: {
@@ -70,27 +88,13 @@ const schema = Yup.object().shape({
 const SignIn: React.FC = () => {
   const classes = useStyles()
 
-  const swal = withReactContent(sweetAlert2)
+  const { signIn, isLoading } = useAuth()
 
   const formik = useFormik({
     initialValues,
     onSubmit: async (values) => {
-      try {
-        await api.post('/auth', {
-          email: values.username,
-          password: values.password
-        })
-        alert('Login Successful')
-        // Implement auth context}
-      } catch (err) {
-        swal.fire({
-          title: (
-            <p>Error! {err.response.data.errors[0].message || err.message}</p>
-          ),
-          icon: 'error',
-          iconColor: 'red'
-        })
-      }
+      await signIn({ email: values.username, password: values.password })
+      formik.setSubmitting(false)
     },
     validationSchema: schema
   })
@@ -200,6 +204,7 @@ const SignIn: React.FC = () => {
           </Typography>
         </Paper>
       </Grid>
+      {isLoading && <Loading />}
     </Container>
   )
 }
