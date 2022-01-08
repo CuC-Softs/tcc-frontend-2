@@ -18,7 +18,7 @@ export type User = {
 export type SignInData = {
   email: string
   password: string
-  rememberMe: boolean
+  rememberMe?: boolean
 }
 
 export type AuthResponse = {
@@ -31,4 +31,5 @@ export type AuthContextType = {
   signIn: (data: SignInData) => Promise<void>
   logOut: () => void
   isLoading: boolean
+  setIsLoading: (value: boolean) => void
 }
