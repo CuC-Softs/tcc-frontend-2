@@ -1,7 +1,3 @@
-import axios from 'axios'
+import { getAPIClient } from './axios'
 
-const api = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_SERVER_URL}`
-})
-
-export default api
+export default getAPIClient()
