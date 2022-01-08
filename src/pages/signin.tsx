@@ -17,6 +17,9 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import theme from '../styles/theme'
 import Link from 'next/link'
+import api from '../services/api'
+import withReactContent from 'sweetalert2-react-content'
+import sweetAlert2 from 'sweetalert2'
 
 const useStyles = makeStyles((theme) => ({
   paperStyle: {
@@ -59,16 +62,35 @@ const initialValues: LoginProps = {
 
 const schema = Yup.object().shape({
   username: Yup.string().required('Required Field'),
-  password: Yup.string().required('Required Field')
+  password: Yup.string()
+    .required('Required Field')
+    .min(8, 'Password must be at least 8 characters')
 })
 
 const SignIn: React.FC = () => {
   const classes = useStyles()
 
+  const swal = withReactContent(sweetAlert2)
+
   const formik = useFormik({
     initialValues,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
+    onSubmit: async (values) => {
+      try {
+        await api.post('/auth', {
+          email: values.username,
+          password: values.password
+        })
+        alert('Login Successful')
+        // Implement auth context}
+      } catch (err) {
+        swal.fire({
+          title: (
+            <p>Error! {err.response.data.errors[0].message || err.message}</p>
+          ),
+          icon: 'error',
+          iconColor: 'red'
+        })
+      }
     },
     validationSchema: schema
   })
