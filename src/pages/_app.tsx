@@ -9,6 +9,7 @@ import { AuthProvider } from '../contexts/AuthContext'
 import GlobalLoading from '../components/GlobalLoading'
 import { LoadingProvider } from '../contexts/LoadingContext'
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const IFConnect = (props) => {
   const { Component, pageProps } = props
 

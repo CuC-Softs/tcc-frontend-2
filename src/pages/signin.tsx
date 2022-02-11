@@ -20,7 +20,6 @@ import Link from 'next/link'
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
 import { useAuth } from '../contexts/AuthContext'
-import Loading from '../components/Loading'
 import { useLoading } from '../contexts/LoadingContext'
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {

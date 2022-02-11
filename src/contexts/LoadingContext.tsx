@@ -20,6 +20,7 @@ export const LoadingProvider: React.FC = ({ children }) => {
   )
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useLoading = () => {
   const context = useContext(LoadingContext)
   if (!context) {
