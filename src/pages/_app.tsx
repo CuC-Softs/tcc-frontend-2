@@ -6,6 +6,8 @@ import theme from '../styles/theme'
 import GlobalStyle from '../styles/global'
 import { useEffect } from 'react'
 import { AuthProvider } from '../contexts/AuthContext'
+import GlobalLoading from '../components/GlobalLoading'
+import { LoadingProvider } from '../contexts/LoadingContext'
 
 const IFConnect = (props) => {
   const { Component, pageProps } = props
@@ -29,9 +31,12 @@ const IFConnect = (props) => {
       <ThemeProvider theme={theme}>
         <StyledComponentThemeProvider theme={theme}>
           <AuthProvider>
-            <CssBaseline />
-            <Component {...pageProps} />
-            <GlobalStyle />
+            <LoadingProvider>
+              <CssBaseline />
+              <Component {...pageProps} />
+              <GlobalStyle />
+              <GlobalLoading />
+            </LoadingProvider>
           </AuthProvider>
         </StyledComponentThemeProvider>
       </ThemeProvider>

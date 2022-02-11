@@ -31,6 +31,7 @@ import { useAuth } from '../contexts/AuthContext'
 import Loading from '../components/Loading'
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
+import { useLoading } from '../contexts/LoadingContext'
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { 'ifconnect.token': token } = parseCookies(ctx)
@@ -182,6 +183,12 @@ const SignUp: React.FC = () => {
       }
     }
   }, [formik.errors, formik.touched])
+
+  const { setIsLoading: SetGlobalLoading } = useLoading()
+
+  useEffect(() => {
+    SetGlobalLoading(isLoading)
+  }, [isLoading])
 
   return (
     <Container>
@@ -405,7 +412,6 @@ const SignUp: React.FC = () => {
           </Typography>
         </Paper>
       </Grid>
-      {isLoading && <Loading />}
     </Container>
   )
 }
