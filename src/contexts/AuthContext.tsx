@@ -2,17 +2,21 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import Router from 'next/router'
 import api from '../services/api'
+import withReactContent from 'sweetalert2-react-content'
+import sweetAlert2 from 'sweetalert2'
 import {
   AuthContextType,
   AuthResponse,
   SignInData,
   User
 } from './AuthContextTypes'
-import { toast } from 'react-toastify'
+import theme from '../styles/theme'
 
 const AuthContext = createContext({} as AuthContextType)
 
 export const AuthProvider: React.FC = ({ children }) => {
+  const swal = withReactContent(sweetAlert2)
+
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -53,9 +57,14 @@ export const AuthProvider: React.FC = ({ children }) => {
       Router.push('/dashboard')
       setIsLoading(false)
     } catch (error) {
-      toast.error('Erro na autenticação', { position: 'top-right' })
+      swal.fire({
+        title:
+          error.response?.data?.errors[0]?.message || 'Erro na autenticação',
+        icon: 'error',
+        iconColor: 'red',
+        confirmButtonColor: theme.palette.error.main
+      })
       setIsLoading(false)
-      console.log(error)
     }
   }
 
