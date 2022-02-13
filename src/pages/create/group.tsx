@@ -4,11 +4,16 @@ import {
   TextField,
   Step,
   StepLabel,
-  Button,
-  makeStyles
+  Button
 } from '@material-ui/core'
-import { useState } from 'react'
+import { ArrowBack } from '@material-ui/icons'
+import { useFormik } from 'formik'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import * as Yup from 'yup'
+import theme from '../../styles/theme'
+import { hexToRgb } from '../../utils/convertHashToRgb'
 
 interface iFormData {
   name: string
@@ -24,43 +29,72 @@ const initialValues: iFormData = {
   userId: 0
 }
 
-const useStyles = makeStyles(() => ({
-  textField: {
-    height: '2.5rem',
-    paddingLeft: 10,
-    fontSize: '1.2rem'
-  }
-}))
+const validationSchema = Yup.object({
+  name: Yup.string().required('Required'),
+  subject: Yup.string().required('Required'),
+  banner: Yup.string().required('Required')
+})
 
 const Group: React.FC = () => {
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: (values) => {
+      if (formik.isValid) {
+        alert(values)
+      }
+    }
+  })
+
   const [activeStep, setActiveStep] = useState(0)
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1)
-  }
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1)
-  }
 
   const steps = ['Name/Subject', 'Banner']
 
-  const classes = useStyles()
+  const handleNext = () => {
+    if (activeStep < steps.length - 1) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    }
+  }
+
+  const handleBack = () => {
+    if (activeStep > 0) {
+      setActiveStep((prevActiveStep) => prevActiveStep - 1)
+    }
+  }
+
+  useEffect(() => {
+    if (
+      ((formik.errors.name && formik.touched.name) ||
+        formik.values.name === '' ||
+        (formik.errors.subject && formik.touched.subject) ||
+        formik.values.subject === '') &&
+      activeStep !== 0
+    ) {
+      setActiveStep(0)
+    }
+  }, [activeStep])
 
   return (
     <Container>
       <Box sx={{ width: '100%' }}>
-        <Stepper activeStep={activeStep}>
-          {steps.map((label) => {
-            const stepProps = {}
-            const labelProps = {}
-            return (
-              <Step key={label} {...stepProps}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
-              </Step>
-            )
-          })}
-        </Stepper>
+        <div className="row">
+          <Link href={'/dashboard'}>
+            <div className="arrow-back">
+              <ArrowBack />
+            </div>
+          </Link>
+          <Stepper activeStep={activeStep} style={{ width: '100%' }}>
+            {steps.map((label) => {
+              const stepProps = {}
+              const labelProps = {}
+              return (
+                <Step key={label} {...stepProps}>
+                  <StepLabel {...labelProps}>{label}</StepLabel>
+                </Step>
+              )
+            })}
+          </Stepper>
+        </div>
         {(() => {
           switch (activeStep) {
             case 0:
@@ -75,11 +109,33 @@ const Group: React.FC = () => {
                   <div className="inner">
                     <div className="name">
                       <TextField
-                        label="Name"
+                        label="Name*"
                         variant="filled"
                         color="primary"
                         fullWidth
                         InputProps={{ style: { backgroundColor: '#fff' } }}
+                        name="name"
+                        onChange={formik.handleChange}
+                        value={formik.values.name}
+                        error={formik.errors.name && formik.touched.name}
+                        helperText={
+                          formik.errors.name && formik.touched.name
+                            ? formik.errors.name
+                            : ''
+                        }
+                        FormHelperTextProps={{
+                          style: {
+                            fontSize: '1rem',
+                            color: '#fff',
+                            backgroundColor: `rgba(${(() => {
+                              const color = hexToRgb(theme.palette.error.main)
+                              return `${color.r}, ${color.g}, ${color.b}`
+                            })()}, 0.7)`,
+                            margin: 0,
+                            padding: 5,
+                            borderRadius: '0 0 5px 5px'
+                          }
+                        }}
                       />
                       <div className="tip">
                         The name is the fundamental basis for the construction
@@ -89,7 +145,7 @@ const Group: React.FC = () => {
                     </div>
                     <div className="subject">
                       <TextField
-                        label="Subject"
+                        label="Subject*"
                         variant="filled"
                         color="primary"
                         multiline
@@ -97,6 +153,28 @@ const Group: React.FC = () => {
                         fullWidth
                         InputProps={{ style: { backgroundColor: '#fff' } }}
                         style={{ height: 'fit-content' }}
+                        name="subject"
+                        onChange={formik.handleChange}
+                        value={formik.values.subject}
+                        error={formik.errors.subject && formik.touched.subject}
+                        helperText={
+                          formik.errors.subject && formik.touched.subject
+                            ? formik.errors.subject
+                            : ''
+                        }
+                        FormHelperTextProps={{
+                          style: {
+                            fontSize: '1rem',
+                            color: '#fff',
+                            backgroundColor: `rgba(${(() => {
+                              const color = hexToRgb(theme.palette.error.main)
+                              return `${color.r}, ${color.g}, ${color.b}`
+                            })()}, 0.7)`,
+                            margin: 0,
+                            padding: 5,
+                            borderRadius: '0 0 5px 5px'
+                          }
+                        }}
                       />
                       <div className="subject-tip">
                         The name is the fundamental basis for the construction
@@ -126,9 +204,16 @@ const Group: React.FC = () => {
             Back
           </Button>
           <Box />
-          <Button onClick={handleNext} variant="contained" color="primary">
-            {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-          </Button>
+          <form noValidate onSubmit={formik.handleSubmit}>
+            <Button
+              type="submit"
+              onClick={handleNext}
+              variant="contained"
+              color="primary"
+            >
+              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+            </Button>
+          </form>
         </div>
       </Box>
     </Container>
@@ -144,6 +229,33 @@ const Container = styled.div`
   overflow: hidden;
   display: flex;
 
+  .row {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding-left: 6rem;
+    position: sticky;
+
+    .arrow-back {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 6rem;
+      background: ${(p) => p.theme.palette.primary.main};
+      color: ${(p) => p.theme.palette.background.default};
+      cursor: pointer;
+
+      svg {
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+  }
+
   .step {
     width: 100%;
     height: 90%;
@@ -156,21 +268,26 @@ const Container = styled.div`
     position: absolute;
     top: 2rem;
     left: 2rem;
-    display: flex;
-    flex-wrap: wrap;
+    display: inline-flex;
+    flex-wrap: nowrap;
     justify-content: space-between;
     width: 95%;
+
+    @media (max-width: 768px) {
+      display: flex;
+      flex-wrap: wrap;
+    }
   }
 
   .subject {
     display: flex;
     height: fit-content;
-    width: 60%;
   }
 
   .name,
   .subject {
     margin: 1rem;
+    width: 100%;
   }
 
   .tip,
