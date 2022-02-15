@@ -29,6 +29,7 @@ const Header: React.FC<HeaderProps> = ({
     <Container>
       <div className="content" {...rest}>
         <ProfileModal
+          id={1}
           name="Placeholder da Silva"
           username="Placeholder"
           bio={{

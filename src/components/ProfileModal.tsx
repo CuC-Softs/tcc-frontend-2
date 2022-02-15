@@ -9,8 +9,13 @@ import {
   Typography
 } from '@material-ui/core'
 import { Close, Person } from '@material-ui/icons'
-import { useState } from 'react'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import withReactContent from 'sweetalert2-react-content'
+import sweetAlert2 from 'sweetalert2'
+import theme from '../styles/theme'
+import { useLoading } from '../contexts/LoadingContext'
 
 const useStyles = makeStyles(() => ({
   follow: {
@@ -33,18 +38,20 @@ interface Group {
 }
 
 interface ProfileModalProps {
-  name: string
-  username: string
-  bio: { title: string; content: string }
-  image: string
-  banner: string
-  followers: number
+  id: number
+  name?: string
+  username?: string
+  bio?: { title?: string; content?: string }
+  image?: string
+  banner?: string
+  followers?: number
   isFollowing?: boolean
   isSelf?: boolean
-  groups: Group[]
+  groups?: Group[]
 }
 
 const ProfileModal: React.FC<ProfileModalProps> = ({
+  id,
   children,
   name,
   username,
@@ -58,115 +65,151 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
 }) => {
   const classes = useStyles()
 
+  const swal = withReactContent(sweetAlert2)
+
   const [open, setOpen] = useState(false)
 
   const handleModal = () => setOpen(!open)
 
+  const { setIsLoading } = useLoading()
+
+  const [user, setUser] = useState<ProfileModalProps | null>(null)
+
+  async function getUser(id: number) {
+    try {
+      setIsLoading(true)
+      const user = await axios.get(`users/${id}`)
+      const isSelf = user.data.id === 1 // TODO: implement this
+      setUser({ ...user.data })
+    } catch (error) {
+      setIsLoading(false)
+      setOpen(false)
+      swal.fire({
+        title: error.response?.data?.errors[0]?.message || 'Ocorreu um erro!',
+        icon: 'error',
+        iconColor: 'red',
+        confirmButtonColor: theme.palette.error.main
+      })
+      setUser(null)
+    }
+  }
+
+  useEffect(() => {
+    getUser(id)
+  }, [open])
+
   return (
     <>
       <ModalButton onClick={handleModal}>{children}</ModalButton>
-      <Modal open={open} onClose={handleModal}>
-        <Container>
-          <CloseModal onClick={handleModal}>
-            <Close />
-          </CloseModal>
-          <div className="background" />
-          <div className="profile">
-            <img className="banner" src={banner} alt="banner" />
-            <div className="image-and-username">
-              <img src={image} alt="" className="profile-image" />
-              <h5>
-                {name}
-                <br /> - @{username}
-              </h5>
-              {!isSelf && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.follow}
-                  startIcon={<Person />}
-                >
-                  {isFollowing ? 'UnFollow' : 'Follow'}
-                </Button>
-              )}
-              <p style={{ marginTop: '1rem' }}>{followers} followers</p>
+      {user && (
+        <Modal open={open} onClose={handleModal}>
+          <Container>
+            <CloseModal onClick={handleModal}>
+              <Close />
+            </CloseModal>
+            <div className="background" />
+            <div className="profile">
+              <img className="banner" src={user.banner} alt="banner" />
+              <div className="image-and-username">
+                <img src={user.image} alt="" className="profile-image" />
+                <h5>
+                  {user.name}
+                  <br /> - @{username}
+                </h5>
+                {!isSelf && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.follow}
+                    startIcon={<Person />}
+                  >
+                    {isFollowing ? 'UnFollow' : 'Follow'}
+                  </Button>
+                )}
+                <p style={{ marginTop: '1rem' }}>
+                  {
+                    // followers
+                    1000
+                  }{' '}
+                  followers
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="card-container">
-            <div className="card">
-              <span className="label">- Bio</span>
-              <Bio>
-                <h1 className="title">{bio.title}</h1>
-                <p className="text">{bio.content}</p>
-              </Bio>
-            </div>
-            <div className="card">
-              <span className="label">- Groups</span>
-              <ul className="group-list">
-                {groups.map((e, i) => (
-                  <li key={e.id} className="group">
+            <div className="card-container">
+              <div className="card">
+                <span className="label">- Bio</span>
+                <Bio>
+                  <p className="text">{bio.content}</p>
+                </Bio>
+              </div>
+              <div className="card">
+                <span className="label">- Groups</span>
+                <ul className="group-list">
+                  {groups.map((e, i) => (
+                    <li key={e.id} className="group">
+                      <Card style={{ height: '100%', borderRadius: '1rem' }}>
+                        <CardMedia
+                          component="img"
+                          alt="green iguana"
+                          height="140"
+                          image={e.image}
+                        />
+                        <CardContent>
+                          <Typography gutterBottom variant="h4" component="div">
+                            {e.name}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            style={{ fontSize: '1.3rem' }}
+                          >
+                            {e.description}
+                          </Typography>
+                        </CardContent>
+                        <CardActions>
+                          <Button size="medium" style={{ fontSize: '1.27rem' }}>
+                            Open
+                          </Button>
+                          <Button size="medium" style={{ fontSize: '1.27rem' }}>
+                            Ask to Join
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </li>
+                  ))}
+                  <li className="group">
                     <Card style={{ height: '100%', borderRadius: '1rem' }}>
                       <CardMedia
                         component="img"
-                        alt="green iguana"
+                        alt="Create Group"
                         height="140"
-                        image={e.image}
+                        image={
+                          'https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JvdXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80'
+                        }
                       />
                       <CardContent>
                         <Typography gutterBottom variant="h4" component="div">
-                          {e.name}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          style={{ fontSize: '1.3rem' }}
-                        >
-                          {e.description}
+                          Create Group
                         </Typography>
                       </CardContent>
                       <CardActions>
-                        <Button size="medium" style={{ fontSize: '1.27rem' }}>
-                          Open
-                        </Button>
-                        <Button size="medium" style={{ fontSize: '1.27rem' }}>
-                          Ask to Join
+                        <Button
+                          size="medium"
+                          style={{ fontSize: '1.5rem' }}
+                          color="primary"
+                          variant="outlined"
+                        >
+                          Create
                         </Button>
                       </CardActions>
                     </Card>
                   </li>
-                ))}
-                <li className="group">
-                  <Card style={{ height: '100%', borderRadius: '1rem' }}>
-                    <CardMedia
-                      component="img"
-                      alt="Create Group"
-                      height="140"
-                      image={
-                        'https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JvdXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80'
-                      }
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h4" component="div">
-                        Create Group
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button
-                        size="medium"
-                        style={{ fontSize: '1.5rem' }}
-                        color="primary"
-                        variant="outlined"
-                      >
-                        Create
-                      </Button>
-                    </CardActions>
-                  </Card>
-                </li>
-              </ul>
+                </ul>
+              </div>
             </div>
-          </div>
-        </Container>
-      </Modal>
+          </Container>
+        </Modal>
+      )}
     </>
   )
 }
