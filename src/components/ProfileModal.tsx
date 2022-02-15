@@ -9,13 +9,14 @@ import {
   Typography
 } from '@material-ui/core'
 import { Close, Person } from '@material-ui/icons'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import withReactContent from 'sweetalert2-react-content'
 import sweetAlert2 from 'sweetalert2'
 import theme from '../styles/theme'
 import { useLoading } from '../contexts/LoadingContext'
+import { useAuth } from '../contexts/AuthContext'
+import api from '../services/api'
 
 const useStyles = makeStyles(() => ({
   follow: {
@@ -53,14 +54,8 @@ interface ProfileModalProps {
 const ProfileModal: React.FC<ProfileModalProps> = ({
   id,
   children,
-  name,
   username,
-  bio,
-  image,
-  banner,
-  followers,
   isFollowing,
-  isSelf,
   groups
 }) => {
   const classes = useStyles()
@@ -73,19 +68,24 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
 
   const { setIsLoading } = useLoading()
 
+  const { user: localUser } = useAuth()
+
   const [user, setUser] = useState<ProfileModalProps | null>(null)
 
   async function getUser(id: number) {
     try {
       setIsLoading(true)
-      const user = await axios.get(`users/${id}`)
-      const isSelf = user.data.id === 1 // TODO: implement this
-      setUser({ ...user.data })
+
+      const user = await api.get(`/users/${id}`)
+      const isSelf = user.data.id === localUser.id
+      setUser({ ...user.data, isSelf })
+      setIsLoading(false)
     } catch (error) {
       setIsLoading(false)
       setOpen(false)
       swal.fire({
-        title: error.response?.data?.errors[0]?.message || 'Ocorreu um erro!',
+        //! error.response?.data?.errors[0]?.message ||
+        title: 'Ocorreu um erro!',
         icon: 'error',
         iconColor: 'red',
         confirmButtonColor: theme.palette.error.main
@@ -95,7 +95,9 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
   }
 
   useEffect(() => {
-    getUser(id)
+    if (open) {
+      getUser(id)
+    }
   }, [open])
 
   return (
@@ -116,7 +118,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                   {user.name}
                   <br /> - @{username}
                 </h5>
-                {!isSelf && (
+                {!user.isSelf && (
                   <Button
                     variant="contained"
                     color="primary"
@@ -139,7 +141,9 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
               <div className="card">
                 <span className="label">- Bio</span>
                 <Bio>
-                  <p className="text">{bio.content}</p>
+                  <p className="text">
+                    {user.bio && user.bio !== '' ? user.bio : '...'}
+                  </p>
                 </Bio>
               </div>
               <div className="card">
@@ -446,5 +450,6 @@ const Bio = styled.div`
     font-size: 1.5rem;
     color: ${(p) => p.theme.palette.text.secondary};
     line-height: 2rem;
+    width: 100%;
   }
 `

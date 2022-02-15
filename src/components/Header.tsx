@@ -2,6 +2,7 @@ import { createStyles, makeStyles, Typography } from '@material-ui/core'
 import { HTMLProps } from 'react'
 import styled from 'styled-components'
 import ProfileModal from './ProfileModal'
+import { useAuth } from '../contexts/AuthContext'
 
 interface HeaderProps extends HTMLProps<HTMLDivElement> {
   pageName: string
@@ -24,12 +25,13 @@ const Header: React.FC<HeaderProps> = ({
   ...rest
 }) => {
   const classes = useStyles()
+  const { user } = useAuth()
 
   return (
     <Container>
       <div className="content" {...rest}>
         <ProfileModal
-          id={1}
+          id={user?.id || undefined}
           name="Placeholder da Silva"
           username="Placeholder"
           bio={{

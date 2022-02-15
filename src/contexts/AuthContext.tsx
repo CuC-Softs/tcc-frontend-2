@@ -22,13 +22,16 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   // Get user data if a cookie exists
   useEffect(() => {
+    setIsLoading(true)
     const { 'ifconnect.token': token } = parseCookies()
+    api.defaults.headers.common.Authorization = `Bearer ${token}`
 
     if (token && !user) {
       const { 'ifconnect.user': userID } = parseCookies()
 
       api.get<User>(`/users/${userID}`).then(({ data: user }) => {
         setUser(user)
+        setIsLoading(false)
       })
     }
   }, [])

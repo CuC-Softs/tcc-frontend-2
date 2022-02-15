@@ -3,18 +3,30 @@ import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
 
 // eslint-disable-next-line no-use-before-define
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import Body from '../components/Body'
 import Header from '../components/Header'
 import CreatePost from '../components/IndexTabs/CreatePost'
 import Home from '../components/IndexTabs/Home'
 import Navigation from '../components/Navigation'
+import { useAuth } from '../contexts/AuthContext'
+import { useLoading } from '../contexts/LoadingContext'
 
 const Dashboard: React.FC = () => {
   const [tab, setTab] = React.useState(0)
+  const { user } = useAuth()
+  const { setIsLoading } = useLoading()
 
-  return (
+  useEffect(() => {
+    if (!user) {
+      setIsLoading(true)
+    } else {
+      setIsLoading(false)
+    }
+  }, [user])
+
+  return user ? (
     <Container>
       <Header pageName="Dashboard">
         <div className="search-bar-container">
@@ -65,6 +77,8 @@ const Dashboard: React.FC = () => {
         />
       </div>
     </Container>
+  ) : (
+    <></>
   )
 }
 
