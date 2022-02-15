@@ -22,7 +22,9 @@ import ShowMoreText from 'react-show-more-text'
 import CommentsItem, { CommentsProps } from './Comments/CommentsItem'
 import Comments from './Comments/Comments'
 interface PostProps {
+  userId: number
   username: string
+  groupId?: number
   group: string
   profileImage?: string
   whenPosted: string
